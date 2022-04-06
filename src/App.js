@@ -1,3 +1,9 @@
-const App = () => <div className="App">Software Project 2022</div>;
+import Home from "./home";
+
+const App = () => (
+  <div className="App">
+    <Home />
+  </div>
+);
 
 export default App;
