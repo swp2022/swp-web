@@ -10,5 +10,5 @@ export const Content = styled.div`
   margin-top: 30px;
   text-align: center;
   border: 2px solid black;
-  background-color: lightblue;
+  background-color: #D9AA8A;
 `;
