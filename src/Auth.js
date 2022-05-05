@@ -7,8 +7,8 @@ const Auth = async () => {
       const  result = await axios.get(
 
       );
-      const token  = result;
-      window.lacalStorage.setItem('tolen', token);
+      const accesstoken  = result;
+      window.lacalStorage.setItem('accesstolen', accesstoken);
     }
     catch(error){
       console.log("error", error);

@@ -1,19 +1,21 @@
-import logo from './logo.svg';
+
 import "./index.css";
 import "./LoginPage.css"
 import LoginBtn from './loginBtn';
+import { CenterWrapper, LoadingCircle, Container, CenterLogo, CenterLogin } from "./LoginPageElements";
 
 function LoginPage(){
   return (
-    <div className ="center-wrapper">
-      <div className = "loading-circle"></div>
-      <div className = "container">
-        <div className = "center-logo"></div>
-        <div className = "center-login">
-          <LoginBtn></LoginBtn>
-        </div>
-      </div>
-    </div>
+    <CenterWrapper>
+      <LoadingCircle></LoadingCircle>
+      <Container>
+        <CenterLogo></CenterLogo>
+        <CenterLogin> 
+          <h3>Login to start!!!</h3>
+          <LoginBtn/>
+        </CenterLogin> 
+      </Container>
+    </CenterWrapper>
   );
 }
 
