@@ -1,5 +1,5 @@
 import Home from "./home";
-import LoginPage from "./LoginPageElements";
+import LoginPage from "./LoginPage.js";
 import Auth from "./Auth"
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 

@@ -1,6 +1,5 @@
 
 import "./index.css";
-import "./LoginPage.css"
 import LoginBtn from './loginBtn';
 import { CenterWrapper, LoadingCircle, Container, CenterLogo, CenterLogin } from "./LoginPageElements";
 
