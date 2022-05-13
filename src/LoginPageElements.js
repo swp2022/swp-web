@@ -1,5 +1,7 @@
 import styled from "styled-components";
-import Logoimage from './whiteLogo.png';
+import Logoimage from './Image/whiteLogo.png';
+import "./index.css"
+
 
 export const CenterWrapper = styled.div`
   position : relative;
@@ -7,7 +9,8 @@ export const CenterWrapper = styled.div`
   display :flex;
   justify-content: center;
   align-items:center;
-`;
+  background-color : #f3efdf;
+  `;
 
 export const LoadingCircle = styled.div`
   margin : 0;
@@ -74,14 +77,3 @@ export const CenterLogin = styled.div`
     transform: rotateY(0deg);
   }
 `;
-
-
-
-
-
-
-
-
-
-
-

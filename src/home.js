@@ -1,10 +1,21 @@
 import { Content, Wrapper } from "./styles";
+import { useSelector } from "react-redux";
 
-const home = () => (
-  <Wrapper>
-    <Content>Software Project 2022</Content>
-    <Content>Deployed with Vercel.</Content>
-  </Wrapper>
-);
 
-export default home;
+function Home (){
+  const user = useSelector(state => state.user);
+  console.log(user);
+  
+  return(
+    
+    <Wrapper>
+      <Content>Software Project 2022</Content>
+
+      <h1>{user.email}</h1>
+
+      <Content>Deployed with Vercel.</Content>
+    </Wrapper>
+  );
+}
+
+export default Home;
