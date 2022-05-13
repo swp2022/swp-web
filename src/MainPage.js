@@ -1,23 +1,25 @@
-import {Header, HeaderLogo,HeaderSlogan ,HeaderInner, CenterWrapper, Section, UserSection } from "./MainPageElements"
+import {
+  Header,
+  HeaderLogo,
+  HeaderSlogan,
+  HeaderInner,
+  CenterWrapper,
+  Section,
+  UserSection,
+} from "./MainPageElements";
 
+const mainPage = () => (
+  <CenterWrapper>
+    <Header>
+      <HeaderInner>
+        <HeaderLogo />
+        <HeaderSlogan />
+      </HeaderInner>
+      <UserSection></UserSection>
+    </Header>
 
-function MainPage(){
-    return (
-      <CenterWrapper>
-        <Header>
-        <HeaderInner>
-          <HeaderLogo/>
-          <HeaderSlogan/>
-        </HeaderInner>
-        <UserSection>
+    <Section></Section>
+  </CenterWrapper>
+);
 
-        </UserSection>
-      </Header>
-
-        <Section></Section>
-      </CenterWrapper>
-      
-    );
-}
-
-export default MainPage;
+export default mainPage;
