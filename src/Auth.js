@@ -1,9 +1,7 @@
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { userInfoGetApi } from "./util/Axios";
 import { useDispatch } from "react-redux";
-import { setTokenInfo, setUserInfo } from "./redux/reducer";
-
-const baseUrl = "https://test.chll.it";
+import { setTokenInfo, setUserInfo } from "./redux/auth-reducer";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -21,26 +19,21 @@ const Auth = () => {
       ),
     };
 
+    localStorage.setItem("tokenInfo", JSON.stringify(tokenInfo));
+
     try {
-      axios
-        .get(`${baseUrl}/v1/user`, {
-          headers: {
-            Authorization: `Bearer ${tokenInfo.accessToken}`,
-          },
-        })
-        .then((response) => {
-          const { data: userInfo } = response;
-          localStorage.setItem("userInfo", JSON.stringify(userInfo));
-          localStorage.setItem("tokenInfo", JSON.stringify(tokenInfo));
-          setUserDispatch(userInfo);
-          setTokenInfoDispatch(tokenInfo);
-          navigate("/mainpage");
-        });
-    } catch (error) {
-      console.error({ error });
+      const response = await userInfoGetApi();
+      const { data: userInfo } = response;
+      localStorage.setItem("userInfo", JSON.stringify(userInfo));
+      setUserDispatch(userInfo);
+      setTokenInfoDispatch(tokenInfo);
+      navigate("/mainpage");
+    } catch (e) {
+      if (e.response.status === 400) {
+        alert("bad request");
+      }
     }
   };
-
   getToken();
 };
 
