@@ -1,12 +1,15 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUser, setToken } from "./redux/action";
+import { setTokenInfo, setUserInfo } from "./redux/reducer";
+
 const baseUrl = "https://test.chll.it";
 
 const Auth = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const setUserDispatch = (userInfo) => dispatch(setUserInfo(userInfo));
+  const setTokenInfoDispatch = (tokenInfo) => dispatch(setTokenInfo(tokenInfo));
 
   const getToken = async () => {
     const tokenInfo = {
@@ -18,8 +21,6 @@ const Auth = () => {
       ),
     };
 
-    
-
     try {
       axios
         .get(`${baseUrl}/v1/user`, {
@@ -28,14 +29,16 @@ const Auth = () => {
           },
         })
         .then((response) => {
-          const { data } = response;
-          console.log(response);
-          dispatch(setUser(data));
-          dispatch(setToken(tokenInfo));
+          const { data: userInfo } = response;
+          localStorage.setItem("userInfo", JSON.stringify(userInfo));
+          localStorage.setItem("tokenInfo", JSON.stringify(tokenInfo));
+          setUserDispatch(userInfo);
+          setTokenInfoDispatch(tokenInfo);
           navigate("/mainpage");
         });
-        
-    } catch (error) {}
+    } catch (error) {
+      console.error({ error });
+    }
   };
 
   getToken();

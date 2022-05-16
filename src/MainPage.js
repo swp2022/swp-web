@@ -8,30 +8,31 @@ import {
   UserSection,
 } from "./MainPageElements";
 
-import{
-  UserImage,
-}from "./UserSectionElements";
-
-import {useSelector}  from "react-redux";
+import { UserImage } from "./UserSectionElements";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 const MainPage = () => {
-const user = useSelector((state) => state.userInfo);
-console.log(user);
+  const user = useSelector((state) => state.user);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  useEffect(() => {
+    if (user) setIsUserLoggedIn(true);
+  }, [user]);
 
-  return(
-  <CenterWrapper>
-    <Header>
-      <HeaderInner>
-        <HeaderLogo />
-        <HeaderSlogan />
-      </HeaderInner>
-      <UserSection>
-        <UserImage image = {user.profileImage} />
-      </UserSection>
-    </Header>
+  return (
+    <CenterWrapper>
+      <Header>
+        <HeaderInner>
+          <HeaderLogo />
+          <HeaderSlogan />
+        </HeaderInner>
+        <UserSection>
+          {isUserLoggedIn && <UserImage image={user.profileImage} />}
+        </UserSection>
+      </Header>
 
-    <Section></Section>
-  </CenterWrapper>
+      <Section></Section>
+    </CenterWrapper>
   );
 };
 

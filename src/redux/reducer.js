@@ -1,18 +1,51 @@
-var initState = {
-  userInfo: JSON.parse(window.localStorage.getItem("userInfo")),
-  tokenInfo: JSON.parse(localStorage.getItem("tokenInfo")),
+import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { combineReducers } from "redux";
+
+const userInitialState = {
+  email: "",
+  nickname: "",
+  profileImage: "",
+  role: "",
 };
 
-const rootReducer = (state = initState, action) => {
-  switch (action.type) {
-    case "SET_USERINFO":
-      return { ...state, userInfo: action.payload };
-    case "SET_TOKENINFO":
-      return { ...state, tokenInfo: action.payload };
-
-    default:
-      return state;
-  }
+const tokenInitialState = {
+  accessToken: "",
+  refreshToken: "",
 };
 
-export default rootReducer;
+const userSlice = createSlice({
+  name: "user",
+  initialState: userInitialState,
+  reducers: {
+    setUserInfo(state, action) {
+      state.email = action.payload.email;
+      state.nickname = action.payload.nickname;
+      state.profileImage = action.payload.profileImage;
+      state.role = action.payload.role;
+    },
+  },
+});
+
+const tokenSlice = createSlice({
+  name: "token",
+  initialState: tokenInitialState,
+  reducers: {
+    setTokenInfo(state, action) {
+      state.accessToken = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken;
+    },
+  },
+});
+
+const rootReducer = combineReducers({
+  user: userSlice.reducer,
+  token: tokenSlice.reducer,
+});
+
+const Store = configureStore({
+  reducer: rootReducer,
+});
+
+export { Store, rootReducer };
+export const { setUserInfo } = userSlice.actions;
+export const { setTokenInfo } = tokenSlice.actions;
