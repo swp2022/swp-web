@@ -18,7 +18,7 @@ const Auth = () => {
       ),
     };
 
-    dispatch(setToken(tokenInfo));
+    
 
     try {
       axios
@@ -29,9 +29,12 @@ const Auth = () => {
         })
         .then((response) => {
           const { data } = response;
+          console.log(response);
           dispatch(setUser(data));
+          dispatch(setToken(tokenInfo));
           navigate("/mainpage");
         });
+        
     } catch (error) {}
   };
 

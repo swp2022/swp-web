@@ -2,7 +2,7 @@ import LoginPage from "./LoginPage.js";
 import Auth from "./Auth"
 import MainPage from "./MainPage";
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import{ HomePrivateRoute,PrivateRoute} from './PrivateRoute';
+import{ HomePrivateRoute,PrivateRoute} from './routers/PrivateRoute';
 
 
 function App(){

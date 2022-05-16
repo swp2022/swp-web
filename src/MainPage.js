@@ -8,18 +8,31 @@ import {
   UserSection,
 } from "./MainPageElements";
 
-const mainPage = () => (
+import{
+  UserImage,
+}from "./UserSectionElements";
+
+import {useSelector}  from "react-redux";
+
+const MainPage = () => {
+const user = useSelector((state) => state.userInfo);
+console.log(user);
+
+  return(
   <CenterWrapper>
     <Header>
       <HeaderInner>
         <HeaderLogo />
         <HeaderSlogan />
       </HeaderInner>
-      <UserSection></UserSection>
+      <UserSection>
+        <UserImage image = {user.profileImage} />
+      </UserSection>
     </Header>
 
     <Section></Section>
   </CenterWrapper>
-);
+  );
+};
 
-export default mainPage;
+export default MainPage;

@@ -27,11 +27,11 @@ export const HeaderInner = styled.div`
   flex-direction: row;
 `;
 
-export const HeaderSlogan = styled.img`
+export const HeaderSlogan = styled.div`
   background-image: url(${Slogan});
   background-size: 170px;
   position: absolute;
-  margin: auto 0;
+  margin: auto 50px;
   top: 0;
   bottom: 0;
   height: 70px;
