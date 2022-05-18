@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { storageState } from "../util/storage";
 
 const userInitialState = {
   email: "",
@@ -14,7 +15,7 @@ const tokenInitialState = {
 
 const userSlice = createSlice({
   name: "user",
-  initialState: userInitialState,
+  initialState: storageState("userInfo", userInitialState),
   reducers: {
     setUserInfo(state, action) {
       state.email = action.payload.email;
@@ -22,21 +23,31 @@ const userSlice = createSlice({
       state.profileImage = action.payload.profileImage;
       state.role = action.payload.role;
     },
+    eraseUserInfo(state) {
+      state.email = "";
+      state.nickname = "";
+      state.profileImage = "";
+      state.role = "";
+    },
   },
 });
 
 const tokenSlice = createSlice({
   name: "token",
-  initialState: tokenInitialState,
+  initialState: storageState("tokenInfo", tokenInitialState),
   reducers: {
     setTokenInfo(state, action) {
       state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
     },
+    eraseTokenInfo(state) {
+      state.accessToken = "";
+      state.refreshToken = "";
+    }
   },
 });
 
-export const { setUserInfo } = userSlice.actions;
-export const { setTokenInfo } = tokenSlice.actions;
+export const { setUserInfo, eraseUserInfo } = userSlice.actions;
+export const { setTokenInfo ,eraseTokenInfo} = tokenSlice.actions;
 export const userReducer = userSlice.reducer;
 export const tokenReducer = tokenSlice.reducer;
