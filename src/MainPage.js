@@ -6,7 +6,7 @@ import {
   CenterWrapper,
   Section,
   UserSection,
-  SecrchBar,
+  SearchBar,
 } from "./MainPageElements";
 
 import { useNavigate } from "react-router-dom";
@@ -24,10 +24,10 @@ const MainPage = () => {
     if (user) setIsUserLoggedIn(true);
   }, [user]);
 
-  const [seachValue, setSerachValue] = useState("");
+  const [searchValue, setSearchValue] = useState("");
 
-  const onChangeField = e => {
-    setSerachValue(e.target.value);
+  const onChangeField = (e) => {
+    setSearchValue(e.target.value);
   };
 
   const dispatch = useDispatch();
@@ -38,13 +38,13 @@ const MainPage = () => {
     dispatch(eraseUserInfo());
     dispatch(eraseTokenInfo());
     navigate("/");
-  }
+  };
 
   const checkLogout = () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
       logout();
     }
-  }
+  };
 
   return (
     <CenterWrapper>
@@ -53,7 +53,12 @@ const MainPage = () => {
           <HeaderLogo />
           <HeaderSlogan />
           <LogoutBtn onClick={checkLogout}>logout</LogoutBtn>
-          <SecrchBar type="text" name="search" value={seachValue} onChange={onChangeField} />
+          <SearchBar
+            type="text"
+            name="search"
+            value={searchValue}
+            onChange={onChangeField}
+          />
         </HeaderInner>
         <UserSection>
           {isUserLoggedIn && <UserImage image={user.profileImage} />}
