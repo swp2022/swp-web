@@ -14,6 +14,7 @@ import { UserImage, UserInfoWrapper, LogoutBtn } from "./UserSectionElements";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { eraseUserInfo, eraseTokenInfo } from "./redux/auth-reducer";
+import { removeTokenInfo, removeUserInfo } from "./util/storage";
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -31,15 +32,16 @@ const MainPage = () => {
 
   const dispatch = useDispatch();
 
-  function logout(){
-    window.localStorage.clear();
+  const logout = () => {
+    removeUserInfo();
+    removeTokenInfo();
     dispatch(eraseUserInfo());
     dispatch(eraseTokenInfo());
     navigate("/");
   }
- 
-  function checkLogout(){
-    if(window.confirm("로그아웃 하시겠습니까?")){
+
+  const checkLogout = () => {
+    if (window.confirm("로그아웃 하시겠습니까?")) {
       logout();
     }
   }
@@ -50,8 +52,8 @@ const MainPage = () => {
         <HeaderInner>
           <HeaderLogo />
           <HeaderSlogan />
-          <LogoutBtn onClick ={checkLogout}>logout</LogoutBtn>
-          <SecrchBar type = "text" name = "search" value = {seachValue} onChange = {onChangeField}/>
+          <LogoutBtn onClick={checkLogout}>logout</LogoutBtn>
+          <SecrchBar type="text" name="search" value={seachValue} onChange={onChangeField} />
         </HeaderInner>
         <UserSection>
           {isUserLoggedIn && <UserImage image={user.profileImage} />}
