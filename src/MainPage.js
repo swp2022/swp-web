@@ -6,9 +6,9 @@ import {
   CenterWrapper,
   Section,
   UserSection,
-  SecrchBar,
+  SearchBar,
 } from "./MainPageElements";
-
+import { logoutClear } from "./util/storage"
 import { useNavigate } from "react-router-dom";
 import { UserImage, UserInfoWrapper, LogoutBtn } from "./UserSectionElements";
 import { useSelector, useDispatch } from "react-redux";
@@ -31,14 +31,14 @@ const MainPage = () => {
 
   const dispatch = useDispatch();
 
-  function logout(){
-    window.localStorage.clear();
+  const logout =() => {
+    logoutClear()
     dispatch(eraseUserInfo());
     dispatch(eraseTokenInfo());
     navigate("/");
   }
  
-  function checkLogout(){
+  const checkLogout = () => {
     if(window.confirm("로그아웃 하시겠습니까?")){
       logout();
     }
@@ -51,7 +51,7 @@ const MainPage = () => {
           <HeaderLogo />
           <HeaderSlogan />
           <LogoutBtn onClick ={checkLogout}>logout</LogoutBtn>
-          <SecrchBar type = "text" name = "search" value = {seachValue} onChange = {onChangeField}/>
+          <SearchBar type = "text" name = "search" value = {seachValue} onChange = {onChangeField}/>
         </HeaderInner>
         <UserSection>
           {isUserLoggedIn && <UserImage image={user.profileImage} />}
