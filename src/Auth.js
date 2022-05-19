@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { userInfoGetApi } from "./util/Axios";
+import { userInfoGetApi, setAxiosAuthorization } from "./util/Axios";
 import { useDispatch } from "react-redux";
 import { setTokenInfo, setUserInfo } from "./redux/auth-reducer";
 
@@ -19,6 +19,7 @@ const Auth = () => {
       ),
     };
 
+    setAxiosAuthorization(tokenInfo.accessToken);
     localStorage.setItem("tokenInfo", JSON.stringify(tokenInfo));
 
     try {

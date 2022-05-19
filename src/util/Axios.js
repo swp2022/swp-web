@@ -1,17 +1,14 @@
 import axios from "axios";
-
+import { loadAccessToken } from "./storage";
 const baseURL = "https://test.chll.it";
 
-export const Axios = axios.create({
-  baseURL,
-});
+axios.defaults.baseURL = baseURL;
+axios.defaults.headers.common['Authorization'] = `Bearer ${loadAccessToken()}`;
+
+export const setAxiosAuthorization = (accessToken) => {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+}
 
 export const userInfoGetApi = async () => {
-  return Axios.get("/v1/user", {
-    headers: {
-      Authorization: `Bearer ${
-        JSON.parse(localStorage.getItem("tokenInfo")).accessToken
-      }`,
-    },
-  });
+  return axios.get("/v1/user");
 };

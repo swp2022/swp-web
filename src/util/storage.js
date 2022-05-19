@@ -7,6 +7,8 @@ export const storageState = (storageKey, predefined) => {
     return predefined;
 }
 
+export const loadAccessToken = () => storageState("tokenInfo", { accessToken: null }).accessToken;
+
 export const removeTokenInfo = () => {
     localStorage.removeItem("tokenInfo");
 }
