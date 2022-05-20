@@ -6,7 +6,6 @@ export const UserImage = styled.div`
   border: 3px solid #d3d3d3;
   width: 100px;
   height: 100px;
-  margin: 50px;
   background-size: 100px;
 `;
 
