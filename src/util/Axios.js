@@ -14,3 +14,23 @@ export const userInfoGetApi = async () =>
       }`,
     },
   });
+
+export const followerContentGetApi = async () => {
+  return Axios.get("/v1/board/follow", {
+    headers: {
+      Authorization: `Bearer ${
+        JSON.parse(localStorage.getItem("tokenInfo")).accessToken
+      }`,
+    },
+  });
+};
+
+export const getBoardComment = async (boardId) => {
+  return Axios.get(`/v1/board/${boardId}/comment`, {
+    headers: {
+      Authorization: `Bearer ${
+        JSON.parse(localStorage.getItem("tokenInfo")).accessToken
+      }`,
+    },
+  });
+};

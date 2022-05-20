@@ -42,7 +42,6 @@ jobs:
               body: "예쁜 코드네요!",
               event: "APPROVE"
             })
-
       - name: Lint validation failure
         if: failure()
         uses: actions/github-script@0.2.0

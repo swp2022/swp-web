@@ -1,15 +1,5 @@
 import styled from "styled-components";
 
-export const UserInfoWrapper = styled.div`
-  position: relative;
-  height: 60%;
-  width: 85%;
-  display: flex;
-  margin: 20px auto;
-  background-color: #f3efdf;
-  border-radius: 10px;
-`;
-
 export const UserImage = styled.div`
   background-image: url(${(props) => props.image});
   border-radius: 50%;
