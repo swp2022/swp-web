@@ -13,6 +13,9 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      
+      - name: Cache actions
+        - uses: actions/cache@v2
         with:
           path: "**/node_modules"
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
@@ -42,11 +45,13 @@ jobs:
       - name: Lint validation failure
         if: failure()
         uses: actions/github-script@0.2.0
-        script: |
-          const pull_number = "${{github.event.number}}"
-          await github.pulls.createReview({
-            ...context.repo,
-            pull_number,
-            body: "Lint 실패.. 적용 후 다시 push 해주세요.",
-           event: "REQUEST_CHANGES"
-          })
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            const pull_number = "${{github.event.number}}"
+            await github.pulls.createReview({
+              ...context.repo,
+              pull_number,
+              body: "Lint 실패.. 적용 후 다시 push 해주세요.",
+             event: "REQUEST_CHANGES"
+            })
