@@ -27,7 +27,7 @@ jobs:
         run: yarn install
 
       - name: Validate lint
-        run: yarn lint
+        run: yarn lint-check
 
       - name: Lint validation success
         if: success()
