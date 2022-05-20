@@ -50,7 +50,7 @@ export const HeaderLogo = styled.div`
   width: 70px;
 `;
 
-export const HeaderSeach = styled.div`
+export const HeaderSearch = styled.div`
 
 `;
 
@@ -76,7 +76,6 @@ export const Section = styled.div`
   margin-top: 130px;
   width: 50%;
   background-color: #fff;
-  height: 1000px;
   left: 10%;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;

@@ -5,7 +5,7 @@ export const UserInfoWrapper = styled.div`
   height: 60%; 
   width: 85%;
   display: flex;
-  margin 20px auto;
+  margin: 20px auto;
   background-color: #f3efdf;
   border-radius: 10px;
 `;
@@ -16,7 +16,7 @@ export const UserImage = styled.div`
   border: 3px solid #d3d3d3;
   width: 100px;
   height: 100px;
-  margin : 50px;
+  margin: 50px;
   background-size: 100px;
 `;
 

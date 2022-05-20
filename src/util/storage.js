@@ -7,7 +7,11 @@ export const storageState = (storageKey, predefined) => {
     return predefined;
 }
 
-export const logoutClear = () => {
-    window.localStorage.removeItem("tokenInfo");
-    window.localStorage.removeItem("userInfo");
+
+export const removeTokenInfo = () => {
+    localStorage.removeItem("tokenInfo");
+}
+
+export const removeUserInfo = () => {
+    localStorage.removeItem("userInfo");
 }
