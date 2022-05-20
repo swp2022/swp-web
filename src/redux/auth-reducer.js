@@ -43,11 +43,11 @@ const tokenSlice = createSlice({
     eraseTokenInfo(state) {
       state.accessToken = "";
       state.refreshToken = "";
-    }
+    },
   },
 });
 
 export const { setUserInfo, eraseUserInfo } = userSlice.actions;
-export const { setTokenInfo ,eraseTokenInfo} = tokenSlice.actions;
+export const { setTokenInfo, eraseTokenInfo } = tokenSlice.actions;
 export const userReducer = userSlice.reducer;
 export const tokenReducer = tokenSlice.reducer;

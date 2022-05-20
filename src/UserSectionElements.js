@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const UserInfoWrapper = styled.div`
   position: relative;
-  height: 60%; 
+  height: 60%;
   width: 85%;
   display: flex;
   margin: 20px auto;
@@ -11,7 +11,7 @@ export const UserInfoWrapper = styled.div`
 `;
 
 export const UserImage = styled.div`
-  background-image: url(${props => props.image});
+  background-image: url(${(props) => props.image});
   border-radius: 50%;
   border: 3px solid #d3d3d3;
   width: 100px;
