@@ -50,6 +50,15 @@ export const HeaderLogo = styled.div`
   width: 70px;
 `;
 
+export const HeaderSearch = styled.div`
+`;
+
+export const SearchBar = styled.input`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+`;
+
 export const UserSection = styled.div`
   position: relative;
   top: 40px;
