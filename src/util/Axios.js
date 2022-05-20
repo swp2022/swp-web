@@ -13,8 +13,10 @@ export const userInfoGetApi = async () =>
         JSON.parse(localStorage.getItem("tokenInfo")).accessToken
       }`,
     },
-  });
-};
+  }
+);
+
+
 
 export const followerContentGetApi = async () => {
   return Axios.get("/v1/board/follow",{
