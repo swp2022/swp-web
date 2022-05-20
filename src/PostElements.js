@@ -8,7 +8,6 @@ export const PostWrapper = styled.div`
   margin: 30px auto;
   border: 1px solid #d3d3d3;
   border-radius: 10px;
-  
 `;
 
 export const PostHeader = styled.div`
@@ -28,7 +27,7 @@ export const HeaderInner = styled.div`
 `;
 
 export const HeaderProfileImage = styled.div`
-  background-image: url(${props => props.image});
+  background-image: url(${(props) => props.image});
   border-radius: 50%;
   border: 3px solid #d3d3d3;
   width: 35px;

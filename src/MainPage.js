@@ -36,7 +36,7 @@ const MainPage = () => {
   /* post 컴포넌트에 들어갈 부분을  */
   const dispatch = useDispatch();
   const setBoardDispatch = (boardInfo) => dispatch(setBoardInfo(boardInfo));
-  const getBoards = async () =>{
+  const getBoards = async () => {
     try {
       dispatch(eraseBoardInfo());
       const response = await followerContentGetApi();
@@ -51,8 +51,7 @@ const MainPage = () => {
 
   useEffect(() => {
     getBoards();
-  },[]);
-  
+  }, []);
 
   /* 로그아웃시 확인 문구 출력 */
   const logout = () => {
@@ -89,10 +88,10 @@ const MainPage = () => {
       </Header>
 
       <Section>
-        {boards.map(board=>{
-          const a = <Post boardInfo = {board}/>
+        {boards.map((board) => {
+          const a = <Post boardInfo={board} />;
           return a;
-        })} 
+        })}
       </Section>
     </CenterWrapper>
   );

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {  
+import {
   PostWrapper,
   PostHeader,
   HeaderInner,
@@ -12,7 +12,7 @@ import {
 
 const Post = (props) => {
   console.log(props);
-  const [boardId, setBoardId] = useState(props.boardInfo.boardId); 
+  const [boardId, setBoardId] = useState(props.boardInfo.boardId);
   const [commentOpen, setCommentOpen] = useState(false);
 
   const openComment = () => {
@@ -26,20 +26,18 @@ const Post = (props) => {
     <PostWrapper>
       <PostHeader>
         <HeaderInner>
-          <HeaderProfileImage image ={props.boardInfo.profileImage}/>
-          <HeaderName>
-            {props.boardInfo.nickname}
-          </HeaderName>
+          <HeaderProfileImage image={props.boardInfo.profileImage} />
+          <HeaderName>{props.boardInfo.nickname}</HeaderName>
         </HeaderInner>
       </PostHeader>
-      <PostBody>
-        {props.boardInfo.content}
-      </PostBody>
+      <PostBody>{props.boardInfo.content}</PostBody>
       <PostUnderbar>
-        <CommentBtn onClick={openComment} >{`${props.boardInfo.commentCount}개의 댓글 보기...`}</CommentBtn>
+        <CommentBtn
+          onClick={openComment}
+        >{`${props.boardInfo.commentCount}개의 댓글 보기...`}</CommentBtn>
       </PostUnderbar>
     </PostWrapper>
-  )
+  );
 };
 
 export default Post;
