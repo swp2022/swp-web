@@ -7,7 +7,6 @@ export const storageState = (storageKey, predefined) => {
     return predefined;
 }
 
-
 export const removeTokenInfo = () => {
     localStorage.removeItem("tokenInfo");
 }

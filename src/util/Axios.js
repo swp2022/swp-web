@@ -6,8 +6,8 @@ export const Axios = axios.create({
   baseURL,
 });
 
-export const userInfoGetApi = async () => {
-  return Axios.get("/v1/user", {
+export const userInfoGetApi = async () =>
+  Axios.get("/v1/user", {
     headers: {
       Authorization: `Bearer ${
         JSON.parse(localStorage.getItem("tokenInfo")).accessToken
@@ -36,4 +36,4 @@ export const getBoardComment = async (boardId) => {
       }`,
     },
   });
-}; 
+};
