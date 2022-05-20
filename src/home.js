@@ -1,5 +1,6 @@
-import { Content, Wrapper } from "./styles";
+import React from "react";
 import { useSelector } from "react-redux";
+import { Content, Wrapper } from "./styles";
 
 const Home = () => {
   const user = useSelector((state) => state.user);
