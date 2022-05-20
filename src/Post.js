@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   PostWrapper,
   PostHeader,
@@ -11,15 +11,10 @@ import {
 } from "./PostElements";
 
 const Post = (props) => {
-  console.log(props);
-  const [boardId, setBoardId] = useState(props.boardInfo.boardId);
   const [commentOpen, setCommentOpen] = useState(false);
 
   const openComment = () => {
     setCommentOpen(true);
-  };
-  const closeComment = () => {
-    setCommentOpen(false);
   };
 
   return (

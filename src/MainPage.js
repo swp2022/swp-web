@@ -10,9 +10,9 @@ import {
 } from "./MainPageElements";
 import { followerContentGetApi } from "./util/Axios";
 import { useNavigate } from "react-router-dom";
-import { UserImage, UserInfoWrapper, LogoutBtn } from "./UserSectionElements";
+import { UserImage, LogoutBtn } from "./UserSectionElements";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { eraseUserInfo, eraseTokenInfo } from "./redux/auth-reducer";
 import { setBoardInfo, eraseBoardInfo } from "./redux/board-reducer";
 import { removeTokenInfo, removeUserInfo } from "./util/storage";
@@ -33,10 +33,12 @@ const MainPage = () => {
     setSearchValue(e.target.value);
   };
 
-  /* post 컴포넌트에 들어갈 부분을  */
   const dispatch = useDispatch();
-  const setBoardDispatch = (boardInfo) => dispatch(setBoardInfo(boardInfo));
-  const getBoards = async () => {
+  const setBoardDispatch = useCallback(
+    (boardInfo) => dispatch(setBoardInfo(boardInfo)),
+    [dispatch],
+  );
+  const getBoards = useCallback(async () => {
     try {
       dispatch(eraseBoardInfo());
       const response = await followerContentGetApi();
@@ -47,11 +49,11 @@ const MainPage = () => {
         alert("bad request");
       }
     }
-  };
+  }, [dispatch, setBoardDispatch]);
 
   useEffect(() => {
     getBoards();
-  }, []);
+  }, [getBoards]);
 
   /* 로그아웃시 확인 문구 출력 */
   const logout = () => {
@@ -86,11 +88,9 @@ const MainPage = () => {
           {isUserLoggedIn && <UserImage image={user.profileImage} />}
         </UserSection>
       </Header>
-
       <Section>
-        {boards.map((board) => {
-          const a = <Post boardInfo={board} />;
-          return a;
+        {boards.forEach((board) => {
+          <Post boardInfo={board} />;
         })}
       </Section>
     </CenterWrapper>
