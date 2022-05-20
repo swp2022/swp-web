@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import {
   Header,
   HeaderLogo,
@@ -9,8 +11,6 @@ import {
 } from "./MainPageElements";
 
 import { UserImage } from "./UserSectionElements";
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
 
 const MainPage = () => {
   const user = useSelector((state) => state.user);

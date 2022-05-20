@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { userInfoGetApi } from "./util/Axios";
 import { useDispatch } from "react-redux";
+import { userInfoGetApi } from "./util/Axios";
 import { setTokenInfo, setUserInfo } from "./redux/auth-reducer";
 
 const Auth = () => {
@@ -12,10 +12,10 @@ const Auth = () => {
   const getToken = async () => {
     const tokenInfo = {
       accessToken: new URL(window.location.href).searchParams.get(
-        "accessToken"
+        "accessToken",
       ),
       refreshToken: new URL(window.location.href).searchParams.get(
-        "refreshToken"
+        "refreshToken",
       ),
     };
 

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
 import { Provider } from "react-redux";
+import App from "./App";
 import { Store } from "./redux/reducer";
 
 ReactDOM.render(
@@ -10,5 +10,5 @@ ReactDOM.render(
       <App />
     </React.StrictMode>
   </Provider>,
-  document.getElementById("root")
+  document.getElementById("root"),
 );
