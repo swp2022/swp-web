@@ -13,9 +13,6 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      
-      - name: Cache actions
-        - uses: actions/cache@v2
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{github.event.pull_request.head.repo.full_name }}
@@ -30,7 +27,7 @@ jobs:
         run: yarn install
 
       - name: Validate lint
-        run: yarn lint
+        run: yarn lint-check
 
       - name: Lint validation success
         if: success()
@@ -45,7 +42,6 @@ jobs:
               body: "예쁜 코드네요!",
               event: "APPROVE"
             })
-
       - name: Lint validation failure
         if: failure()
         uses: actions/github-script@0.2.0
