@@ -8,8 +8,8 @@ import { LoadingWrap } from "./BoardElement";
 
 export default function Board() {
   const boards = useSelector((state) => state.board);
-  const [ target , setTarget ] =useState(null);
-  const [ isLoading , setIsLoading ] = useState(false);
+  const [target, setTarget] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   let pageNum = 0;
   const dispatch = useDispatch();
 
@@ -34,11 +34,11 @@ export default function Board() {
     [dispatch, setBoardDispatch],
   );
 
-  const onIntersect = async([entry], observer) => {
-    if(entry.isIntersecting && !isLoading){
+  const onIntersect = async ([entry], observer) => {
+    if (entry.isIntersecting && !isLoading) {
       observer.unobserve(entry.target);
       setIsLoading(true);
-      await new Promise ((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       await getBoards(pageNum);
       pageNum = pageNum + 1;
       setIsLoading(false);
@@ -46,10 +46,10 @@ export default function Board() {
     }
   };
 
-  useEffect(() =>{
+  useEffect(() => {
     let observer;
-    if(target){
-      observer = new IntersectionObserver(onIntersect,{
+    if (target) {
+      observer = new IntersectionObserver(onIntersect, {
         threshold: 0.4,
       });
       observer.observe(target);
@@ -60,13 +60,11 @@ export default function Board() {
   return (
     <div>
       {boards.map((boardInfo) => (
-        <Post key={boardInfo.boardId} boardInfo={boardInfo}/>
+        <Post key={boardInfo.boardId} boardInfo={boardInfo} />
       ))}
-      <LoadingWrap ref = {setTarget}>
-        {isLoading && <ReactLoading type ="spin" color = "#d9aa8a"/>}
+      <LoadingWrap ref={setTarget}>
+        {isLoading && <ReactLoading type="spin" color="#d9aa8a" />}
       </LoadingWrap>
-      
     </div>
   );
-
 }

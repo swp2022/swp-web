@@ -10,7 +10,6 @@ import {
 import PostComment from "./PostComment";
 
 const Post = (props) => {
-
   return (
     <PostWrapper>
       <PostHeader>
@@ -21,7 +20,7 @@ const Post = (props) => {
       </PostHeader>
       <PostBody>{props.boardInfo.content}</PostBody>
       <PostUnderbar>
-        <PostComment boardInfo = {props.boardInfo}/>
+        <PostComment boardInfo={props.boardInfo} />
       </PostUnderbar>
     </PostWrapper>
   );

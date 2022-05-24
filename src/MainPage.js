@@ -81,8 +81,6 @@ const MainPage = () => {
     }
   };
 
-  
-
   return (
     <CenterWrapper>
       <AppBar color="primary" position="static">

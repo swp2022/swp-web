@@ -20,8 +20,8 @@ export const followerContentGetApi = async (page) => {
   return Axios.get(`/v1/board/follow?page=${page}`, {
     headers: {
       Authorization: `Bearer ${
-        
-        JSON.parse(localStorage.getItem("tokenInfo")).accessToken
+        check
+        //JSON.parse(localStorage.getItem("tokenInfo")).accessToken
       }`,
     },
   });
@@ -31,8 +31,8 @@ export const BoardCommentGetApi = async (boardId) => {
   return Axios.get(`/v1/board/${boardId}/comment`, {
     headers: {
       Authorization: `Bearer ${
-        
-        JSON.parse(localStorage.getItem("tokenInfo")).accessToken
+        check
+        //JSON.parse(localStorage.getItem("tokenInfo")).accessToken
       }`,
     },
   });
@@ -46,8 +46,8 @@ export const BoardCommentPostApi = async(boardId , comment) =>{
   {
     headers: {
       Authorization: `Bearer ${
-        
-        JSON.parse(localStorage.getItem("tokenInfo")).accessToken
+        check
+        //JSON.parse(localStorage.getItem("tokenInfo")).accessToken
       }`,
     },    
   });
