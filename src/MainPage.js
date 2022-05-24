@@ -1,27 +1,28 @@
-import {
-  Header,
-  HeaderLogo,
-  HeaderSlogan,
-  HeaderInner,
-  CenterWrapper,
-  Section,
-  UserSection,
-  SearchBar,
-} from "./MainPageElements";
-import { followerContentGetApi } from "./util/Axios";
+import { HeaderLogo, CenterWrapper } from "./MainPageElements";
 import { useNavigate } from "react-router-dom";
-import { UserImage, LogoutBtn } from "./UserSectionElements";
+import { UserImage } from "./UserSectionElements";
 import { useSelector, useDispatch } from "react-redux";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { eraseUserInfo, eraseTokenInfo } from "./redux/auth-reducer";
-import { setBoardInfo, eraseBoardInfo } from "./redux/board-reducer";
 import { removeTokenInfo, removeUserInfo } from "./util/storage";
-import Post from "./Post";
+import Board from "./Board";
+import {
+  alpha,
+  AppBar,
+  Button,
+  Grid,
+  InputBase,
+  Paper,
+  styled,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import { Container } from "@mui/system";
 
 const MainPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const boards = useSelector((state) => state.board);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   useEffect(() => {
     if (user) setIsUserLoggedIn(true);
@@ -32,28 +33,6 @@ const MainPage = () => {
   const onChangeField = (e) => {
     setSearchValue(e.target.value);
   };
-
-  const dispatch = useDispatch();
-  const setBoardDispatch = useCallback(
-    (boardInfo) => dispatch(setBoardInfo(boardInfo)),
-    [dispatch],
-  );
-  const getBoards = useCallback(async () => {
-    try {
-      dispatch(eraseBoardInfo());
-      const response = await followerContentGetApi();
-      const { data: boardsInfo } = response;
-      setBoardDispatch(boardsInfo);
-    } catch (e) {
-      if (e.response.status === 400) {
-        alert("bad request");
-      }
-    }
-  }, [dispatch, setBoardDispatch]);
-
-  useEffect(() => {
-    getBoards();
-  }, [getBoards]);
 
   /* 로그아웃시 확인 문구 출력 */
   const logout = () => {
@@ -70,29 +49,92 @@ const MainPage = () => {
     }
   };
 
+  const Search = styled("div")(({ theme }) => ({
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    "&:hover": {
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginRight: 12,
+    width: "100%",
+    [theme.breakpoints.up("xs")]: {
+      marginLeft: theme.spacing(1),
+      width: "auto",
+    },
+  }));
+
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: "inherit",
+    "& .MuiInputBase-input": {
+      padding: theme.spacing(0.75),
+      paddingLeft: `calc(1em + ${theme.spacing(1)})`,
+      transition: theme.transitions.create("width"),
+      width: "100%",
+      [theme.breakpoints.up("sm")]: {
+        width: "12ch",
+        "&:focus": {
+          width: "20ch",
+        },
+      },
+    },
+  }));
+
   return (
     <CenterWrapper>
-      <Header>
-        <HeaderInner>
+      <AppBar color="primary" position="static">
+        <Toolbar>
           <HeaderLogo />
-          <HeaderSlogan />
-          <LogoutBtn onClick={checkLogout}>logout</LogoutBtn>
-          <SearchBar
-            type="text"
-            name="search"
-            value={searchValue}
-            onChange={onChangeField}
-          />
-        </HeaderInner>
-        <UserSection>
-          {isUserLoggedIn && <UserImage image={user.profileImage} />}
-        </UserSection>
-      </Header>
-      <Section>
-        {boards.forEach((board) => {
-          <Post boardInfo={board} />;
-        })}
-      </Section>
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="/"
+            sx={{
+              ml: 1,
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              fontFamily: "monospace",
+              fontWeight: 700,
+              letterSpacing: ".35rem",
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            O.STUDY
+          </Typography>
+          <Search>
+            <StyledInputBase
+              placeholder="유저 검색"
+              inputProps={{ "aria-label": "search" }}
+              value={searchValue}
+              onChange={onChangeField}
+            />
+          </Search>
+          <Button variant="contained" color="secondary" onClick={checkLogout}>
+            {" "}
+            로그아웃
+          </Button>
+        </Toolbar>
+      </AppBar>
+      <Container maxWidth="xl" sx={{ paddingTop: 2 }}>
+        <Grid
+          container
+          spacing={2}
+          direction={{ xs: "column-reverse", md: "row" }}
+        >
+          <Grid item xs={12} md={8}>
+            <Paper elevation={2}>
+              <Board />
+            </Paper>
+          </Grid>
+          <Grid item xs>
+            <Paper elevation={2}>
+              {isUserLoggedIn && <UserImage image={user.profileImage} />}
+            </Paper>
+          </Grid>
+        </Grid>
+      </Container>
     </CenterWrapper>
   );
 };

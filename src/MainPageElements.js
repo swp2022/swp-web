@@ -4,7 +4,6 @@ import Slogan from "./Image/slogan.png";
 
 export const CenterWrapper = styled.div`
   position: relative;
-  background-color: #f3efdf;
 `;
 
 export const Header = styled.div`
@@ -29,11 +28,8 @@ export const HeaderInner = styled.div`
 
 export const HeaderSlogan = styled.div`
   background-image: url(${Slogan});
-  background-size: 170px;
-  position: absolute;
-  margin: auto 50px;
-  top: 0;
-  bottom: 0;
+  background-size: 180px;
+  position: relative;
   height: 70px;
   width: 140px;
 `;
@@ -41,13 +37,10 @@ export const HeaderSlogan = styled.div`
 export const HeaderLogo = styled.div`
   background-image: url(${Logoimage});
   background-size: 70px;
-  background-color: #fff;
-  position: absolute;
+  position: relative;
   margin: auto 0;
-  top: 0;
-  bottom: 0;
-  height: 70px;
-  width: 70px;
+  height: 77px;
+  width: 77px;
 `;
 
 export const HeaderSearch = styled.div``;
