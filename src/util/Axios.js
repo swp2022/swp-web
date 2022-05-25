@@ -55,3 +55,14 @@ export const BoardCommentPostApi = async (boardId, comment) => {
     },
   );
 };
+
+export const searchUserInfoApi = async () => {
+  return Axios.get("/v1/user", {
+    headers: {
+      Authorization: `Bearer ${
+        check
+        //JSON.parse(localStorage.getItem("tokenInfo")).accessToken
+      }`,
+    },
+  });
+};
