@@ -58,13 +58,13 @@ export default function Board() {
   }, [target]);
 
   return (
-    <div>
+    <>
       {boards.map((boardInfo) => (
         <Post key={boardInfo.boardId} boardInfo={boardInfo} />
       ))}
       <LoadingWrap ref={setTarget}>
         {isLoading && <ReactLoading type="spin" color="#d9aa8a" />}
       </LoadingWrap>
-    </div>
+    </>
   );
 }

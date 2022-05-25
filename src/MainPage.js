@@ -62,7 +62,6 @@ const MainPage = () => {
   const [searchValue, setSearchValue] = useState("");
 
   const onChangeField = (e) => {
-    console.log(e);
     setSearchValue(e.target.value);
   };
 

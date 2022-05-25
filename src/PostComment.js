@@ -28,27 +28,28 @@ const PostComment = (props) => {
   const [newComment, setNewComment] = useState("");
 
   const onChangeField = (e) => {
-    console.log(e.target.value);
     setNewComment(e.target.value);
   };
 
-  const PostComment = () => {
-    BoardCommentPostApi(props.boardInfo.boardId, newComment);
+  const PostComment = async () => {
+    await BoardCommentPostApi(props.boardInfo.boardId, newComment);
     setNewComment("");
   };
 
-  const getComment = useCallback(async (boardId) => {
-    try {
-      const response = await BoardCommentGetApi(boardId);
-      const { data: commentInfos } = response;
-      setComments(commentInfos);
-      console.log(comments);
-    } catch (e) {
-      if (e.response.status === 400) {
-        alert("bad request");
+  const getComment = useCallback(
+    async (boardId) => {
+      try {
+        const response = await BoardCommentGetApi(boardId);
+        const { data: commentInfos } = response;
+        setComments(commentInfos);
+      } catch (e) {
+        if (e.response.status === 400) {
+          alert("bad request");
+        }
       }
-    }
-  });
+    },
+    [setComments],
+  );
 
   const handleOpen = () => {
     setOpen(true);
