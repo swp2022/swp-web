@@ -94,7 +94,7 @@ const PostComment = (props) => {
             {comments.map((c) => (
               <ListItem key={c.commentId} alignItems="flex-start">
                 <ListItemAvatar>
-                  <Avatar alt={c.userId} src={c.profileImage} />
+                  <Avatar src={c.profileImage} />
                 </ListItemAvatar>
                 <ListItemText
                   primary={c.userId}

@@ -17,9 +17,10 @@ import {
   styled,
   Toolbar,
   Typography,
-  Box,
-  Divider,
-  Stack,
+  Menu,
+  IconButton,
+  Avatar,
+  MenuItem,
 } from "@mui/material";
 import { Container } from "@mui/system";
 
@@ -63,15 +64,19 @@ const MainPage = () => {
     if (user) setIsUserLoggedIn(true);
   }, [user]);
 
-  const [searchValue, setSearchValue] = useState({ name: "" });
+  const [searchValue, setSearchValue] = useState();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [menuAnchorEl, setMenuAnchorEl] = useState(null);
+  const menuOpen = Boolean(menuAnchorEl);
 
   const onChangeField = (e) => {
-    setSearchValue({
-      ...searchValue,
-      name: e.target.value,
-    });
-    console.log("mainpage: " + searchValue.name);
+    setSearchValue(e.target.value);
   };
+
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+  const openMenu = (e) => setMenuAnchorEl(e.currentTarget);
+  const closeMenu = () => setMenuAnchorEl(null);
 
   /* 로그아웃시 확인 문구 출력 */
   const logout = () => {
@@ -101,7 +106,6 @@ const MainPage = () => {
             sx={{
               ml: 1,
               flexGrow: 1,
-              display: { xs: "none", md: "flex" },
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".35rem",
@@ -111,34 +115,31 @@ const MainPage = () => {
           >
             O.STUDY
           </Typography>
-          <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={3}>
-              <Grid item md={8} />
-              <Grid item md={4}>
-                <Stack
-                  direction="row"
-                  divider={<Divider orientation="vertical" flexItem />}
-                  spacing={8}
-                >
-                  <CommentBtn>mypage</CommentBtn>
-                  <CommentBtn onClick={checkLogout}>logout</CommentBtn>
-                </Stack>
-              </Grid>
-              <Grid item md={5} />
-              <Grid item md={4}>
-                <Search>
-                  <StyledInputBase
-                    placeholder="유저 검색"
-                    inputProps={{ "aria-label": "search" }}
-                    onChange={onChangeField}
-                  />
-                </Search>
-              </Grid>
-              <Grid item md={3}>
-                <FollowerModal value={searchValue} />
-              </Grid>
-            </Grid>
-          </Box>
+          <Search>
+            <StyledInputBase
+              placeholder="유저 검색"
+              inputProps={{ "aria-label": "search" }}
+              onChange={onChangeField}
+            />
+          </Search>
+          <Button variant="contained" color="secondary" onClick={openModal}>
+            검색
+          </Button>
+          {modalOpen && (
+            <FollowerModal search={searchValue} handleClose={closeModal} />
+          )}
+          <IconButton onClick={openMenu}>
+            <Avatar src={user.profileImage}></Avatar>
+          </IconButton>
+          <Menu
+            anchorEl={menuAnchorEl}
+            open={menuOpen}
+            onClose={closeMenu}
+            onClick={closeMenu}
+          >
+            <MenuItem>마이페이지</MenuItem>
+            <MenuItem onClick={checkLogout}>로그아웃</MenuItem>
+          </Menu>
         </Toolbar>
       </AppBar>
       <Container maxWidth="lg" sx={{ paddingTop: 2 }}>

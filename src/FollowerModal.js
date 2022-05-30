@@ -1,5 +1,5 @@
-import { React, useCallback } from "react";
-import { Button, Modal, Box } from "@mui/material";
+import { React, useCallback, useEffect } from "react";
+import { Modal, Box } from "@mui/material";
 import { useState } from "react";
 import { searchUserInfoApi } from "./util/Axios";
 import UserInfoComponent from "./UserInfoComponent";
@@ -18,13 +18,11 @@ const style = {
 };
 
 const FollowerModal = (props) => {
-  const [open, setOpen] = useState(false);
   const [userInfos, setUserInfos] = useState([]);
 
   const getUserInfos = useCallback(async () => {
     try {
-      console.log(props.value);
-      const response = await searchUserInfoApi(props.value.name);
+      const response = await searchUserInfoApi(props.search);
       const { data: usersInfos } = response;
       setUserInfos(usersInfos);
     } catch (e) {
@@ -34,22 +32,15 @@ const FollowerModal = (props) => {
     }
   }, [setUserInfos]);
 
-  const handleOpen = () => {
-    setOpen(true);
+  useEffect(() => {
     getUserInfos();
-  };
-
-  const handleClose = () => setOpen(false);
+  }, []);
 
   return (
     <>
-      <Button variant="contained" color="secondary" onClick={handleOpen}>
-        {" "}
-        검색
-      </Button>
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={true}
+        onClose={props.handleClose}
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
