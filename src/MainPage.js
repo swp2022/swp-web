@@ -1,10 +1,11 @@
-import { HeaderLogo, CenterWrapper } from "./MainPageElements";
+import { HeaderLogo, CenterWrapper, CommentBtn } from "./MainPageElements";
 import { useNavigate } from "react-router-dom";
 import { UserImage } from "./UserSectionElements";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { eraseUserInfo, eraseTokenInfo } from "./redux/auth-reducer";
 import { removeTokenInfo, removeUserInfo } from "./util/storage";
+import FollowerModal from "./FollowerModal"
 import Board from "./Board";
 import {
   alpha,
@@ -16,8 +17,14 @@ import {
   styled,
   Toolbar,
   Typography,
+  Box,
+  Divider,
+  Stack
 } from "@mui/material";
 import { Container } from "@mui/system";
+
+
+
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -59,11 +66,14 @@ const MainPage = () => {
     if (user) setIsUserLoggedIn(true);
   }, [user]);
 
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState({name : ""});
 
   const onChangeField = (e) => {
-    console.log(e);
-    setSearchValue(e.target.value);
+    setSearchValue({
+      ...searchValue ,
+      name : e.target.value,
+    });  
+    console.log("mainpage: " + searchValue.name);
   };
 
   /* 로그아웃시 확인 문구 출력 */
@@ -104,17 +114,36 @@ const MainPage = () => {
           >
             O.STUDY
           </Typography>
-          <Search>
-            <StyledInputBase
-              placeholder="유저 검색"
-              inputProps={{ "aria-label": "search" }}
-              onChange={onChangeField}
-            />
-          </Search>
-          <Button variant="contained" color="secondary" onClick={checkLogout}>
-            {" "}
-            로그아웃
-          </Button>
+          <Box sx={{ flexGrow: 1 }}>
+            <Grid container spacing={3}>
+              <Grid item md={8}/>
+              <Grid item md={4}>
+                <Stack
+                  direction="row"
+                  divider={<Divider orientation="vertical" flexItem />}
+                  spacing={8}
+                >
+                  <CommentBtn>mypage</CommentBtn>
+                  <CommentBtn onClick={checkLogout}>logout</CommentBtn>
+                </Stack>
+              </Grid>
+              <Grid item md={5}/>
+              <Grid item md={4}>
+                <Search>
+                  <StyledInputBase
+                    placeholder="유저 검색"
+                    inputProps={{ "aria-label": "search" }}
+                    onChange={onChangeField}
+                  />
+                </Search>
+              </Grid>
+              <Grid item md={3}>
+                <FollowerModal value = {searchValue} />
+              </Grid> 
+            </Grid>
+          </Box>
+          
+          
         </Toolbar>
       </AppBar>
       <Container maxWidth="lg" sx={{ paddingTop: 2 }}>

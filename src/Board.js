@@ -2,7 +2,7 @@ import Post from "./Post";
 import ReactLoading from "react-loading";
 import { useDispatch, useSelector } from "react-redux";
 import { eraseBoardInfo, setBoardInfo } from "./redux/board-reducer";
-import { useCallback, useRef, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { followerContentGetApi } from "./util/Axios";
 import { LoadingWrap } from "./BoardElement";
 
@@ -58,13 +58,13 @@ export default function Board() {
   }, [target]);
 
   return (
-    <div>
+    <>
       {boards.map((boardInfo) => (
         <Post key={boardInfo.boardId} boardInfo={boardInfo} />
       ))}
       <LoadingWrap ref={setTarget}>
         {isLoading && <ReactLoading type="spin" color="#d9aa8a" />}
       </LoadingWrap>
-    </div>
+    </>
   );
 }
