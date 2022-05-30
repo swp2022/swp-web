@@ -10,6 +10,7 @@ export default function Board() {
   const boards = useSelector((state) => state.board);
   const [target, setTarget] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadCompleted, setIsLoadCompleted] = useState(false);
   let pageNum = 0;
   const dispatch = useDispatch();
 
@@ -25,6 +26,7 @@ export default function Board() {
         const response = await followerContentGetApi(page);
         const { data: boardsInfo } = response;
         setBoardDispatch(boardsInfo);
+        return response.data.length;
       } catch (e) {
         if (e.response.status === 400) {
           alert("bad request");
@@ -38,8 +40,8 @@ export default function Board() {
     if (entry.isIntersecting && !isLoading) {
       observer.unobserve(entry.target);
       setIsLoading(true);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      await getBoards(pageNum);
+      const retrivedCount = await getBoards(pageNum);
+      if (!retrivedCount) setIsLoadCompleted(true);
       pageNum = pageNum + 1;
       setIsLoading(false);
       observer.observe(entry.target);
@@ -62,9 +64,11 @@ export default function Board() {
       {boards.map((boardInfo) => (
         <Post key={boardInfo.boardId} boardInfo={boardInfo} />
       ))}
-      <LoadingWrap ref={setTarget}>
-        {isLoading && <ReactLoading type="spin" color="#d9aa8a" />}
-      </LoadingWrap>
+      {!isLoadCompleted && (
+        <LoadingWrap ref={setTarget}>
+          {isLoading && <ReactLoading type="spin" color="#d9aa8a" />}
+        </LoadingWrap>
+      )}
     </>
   );
 }
