@@ -6,14 +6,18 @@ import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 
 const UserInfoComponent = (props) => {
-  const [fallowed, setfallowed] = useState(props.userInfo.isFollowing);
-
-  const postFolloing = async () => {
-    await postFollowingApi(props.userInfo.userId);
+  const postFollowing = async () => {
+    try {
+      await postFollowingApi(props.userInfo.userId);
+      props.updateFollowing(props.index, true);
+    } catch (e) {}
   };
 
   const deleteFollowing = async () => {
-    await deleteFollowingApi(props.userInfo.userId);
+    try {
+      await deleteFollowingApi(props.userInfo.userId);
+      props.updateFollowing(props.index, false);
+    } catch (e) {}
   };
 
   return (
@@ -25,8 +29,8 @@ const UserInfoComponent = (props) => {
           </Grid>
           <Grid item xs={4}></Grid>
           <Grid item xs={4}>
-            {fallowed ? (
-              <Button variant="contained" onClick={postFolloing}>
+            {!props.userInfo.isFollowing ? (
+              <Button variant="contained" onClick={postFollowing}>
                 Follow
               </Button>
             ) : (

@@ -78,17 +78,14 @@ export const postFollowingApi = async (userId) => {
 };
 
 export const deleteFollowingApi = async (userId) => {
-  return Axios.delete(
-    "/v1/relationship",
-    {
+  return Axios.delete("/v1/relationship", {
+    data: {
       toUserId: userId,
     },
-    {
-      headers: {
-        Authorization: `Bearer ${
-          JSON.parse(localStorage.getItem("tokenInfo")).accessToken
-        }`,
-      },
+    headers: {
+      Authorization: `Bearer ${
+        JSON.parse(localStorage.getItem("tokenInfo")).accessToken
+      }`,
     },
-  );
+  });
 };

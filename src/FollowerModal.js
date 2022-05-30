@@ -20,6 +20,14 @@ const style = {
 const FollowerModal = (props) => {
   const [userInfos, setUserInfos] = useState([]);
 
+  const updateFollowing = (index, value) => {
+    if (userInfos[index]) {
+      console.log(userInfos[index]);
+      userInfos[index].isFollowing = value;
+      setUserInfos(userInfos);
+    }
+  };
+
   const getUserInfos = useCallback(async () => {
     try {
       const response = await searchUserInfoApi(props.search);
@@ -45,8 +53,13 @@ const FollowerModal = (props) => {
         aria-describedby="parent-modal-description"
       >
         <Box sx={{ ...style, width: 400, flexGrow: 1 }}>
-          {userInfos.map((userInfo) => (
-            <UserInfoComponent key={userInfo.userId} userInfo={userInfo} />
+          {userInfos.map((userInfo, index) => (
+            <UserInfoComponent
+              key={userInfo.userId}
+              index={index}
+              userInfo={userInfo}
+              updateFollowing={updateFollowing}
+            />
           ))}
         </Box>
       </Modal>
