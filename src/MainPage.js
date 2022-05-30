@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { eraseUserInfo, eraseTokenInfo } from "./redux/auth-reducer";
 import { removeTokenInfo, removeUserInfo } from "./util/storage";
-import FollowerModal from "./FollowerModal"
+import FollowerModal from "./FollowerModal";
 import Board from "./Board";
 import {
   alpha,
@@ -19,12 +19,9 @@ import {
   Typography,
   Box,
   Divider,
-  Stack
+  Stack,
 } from "@mui/material";
 import { Container } from "@mui/system";
-
-
-
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -66,13 +63,13 @@ const MainPage = () => {
     if (user) setIsUserLoggedIn(true);
   }, [user]);
 
-  const [searchValue, setSearchValue] = useState({name : ""});
+  const [searchValue, setSearchValue] = useState({ name: "" });
 
   const onChangeField = (e) => {
     setSearchValue({
-      ...searchValue ,
-      name : e.target.value,
-    });  
+      ...searchValue,
+      name: e.target.value,
+    });
     console.log("mainpage: " + searchValue.name);
   };
 
@@ -116,7 +113,7 @@ const MainPage = () => {
           </Typography>
           <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={3}>
-              <Grid item md={8}/>
+              <Grid item md={8} />
               <Grid item md={4}>
                 <Stack
                   direction="row"
@@ -127,7 +124,7 @@ const MainPage = () => {
                   <CommentBtn onClick={checkLogout}>logout</CommentBtn>
                 </Stack>
               </Grid>
-              <Grid item md={5}/>
+              <Grid item md={5} />
               <Grid item md={4}>
                 <Search>
                   <StyledInputBase
@@ -138,12 +135,10 @@ const MainPage = () => {
                 </Search>
               </Grid>
               <Grid item md={3}>
-                <FollowerModal value = {searchValue} />
-              </Grid> 
+                <FollowerModal value={searchValue} />
+              </Grid>
             </Grid>
           </Box>
-          
-          
         </Toolbar>
       </AppBar>
       <Container maxWidth="lg" sx={{ paddingTop: 2 }}>

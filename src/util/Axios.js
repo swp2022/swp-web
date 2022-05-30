@@ -52,9 +52,7 @@ export const BoardCommentPostApi = async (boardId, comment) => {
 };
 
 export const searchUserInfoApi = async (userName) => {
-  return Axios.get(
-    `/v1/user/search/${userName}`, 
-    {
+  return Axios.get(`/v1/user/search/${userName}`, {
     headers: {
       Authorization: `Bearer ${
         JSON.parse(localStorage.getItem("tokenInfo")).accessToken
@@ -65,30 +63,32 @@ export const searchUserInfoApi = async (userName) => {
 
 export const postFollowingApi = async (userId) => {
   return Axios.post(
-    '/v1/relationship',
+    "/v1/relationship",
     {
       toUserId: userId,
-    }, 
-    {
-    headers: {
-      Authorization: `Bearer ${
-        JSON.parse(localStorage.getItem("tokenInfo")).accessToken
-      }`,
     },
-  });
+    {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("tokenInfo")).accessToken
+        }`,
+      },
+    },
+  );
 };
 
 export const deleteFollowingApi = async (userId) => {
   return Axios.delete(
-    '/v1/relationship', 
+    "/v1/relationship",
     {
       toUserId: userId,
     },
     {
-    headers: {
-      Authorization: `Bearer ${
-       JSON.parse(localStorage.getItem("tokenInfo")).accessToken
-      }`,
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("tokenInfo")).accessToken
+        }`,
+      },
     },
-  });
+  );
 };

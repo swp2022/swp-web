@@ -2,8 +2,7 @@ import { React, useCallback } from "react";
 import { Button, Modal, Box } from "@mui/material";
 import { useState } from "react";
 import { searchUserInfoApi } from "./util/Axios";
-import UserInfoComponent from "./UserInfoComponent"
-
+import UserInfoComponent from "./UserInfoComponent";
 
 const style = {
   position: "absolute",
@@ -20,23 +19,20 @@ const style = {
 
 const FollowerModal = (props) => {
   const [open, setOpen] = useState(false);
-  const [userInfos, setUserInfos ] = useState([]);
-  
-  const getUserInfos = useCallback(
-    async() => {
-      try{ 
-        console.log(props.value);
-        const response = await searchUserInfoApi(props.value.name);
-        const { data: usersInfos } = response;
-        setUserInfos(usersInfos);
-      }catch(e){
-        if(e.response.status === 400){
-          alert("bad requeset")
-        } 
+  const [userInfos, setUserInfos] = useState([]);
+
+  const getUserInfos = useCallback(async () => {
+    try {
+      console.log(props.value);
+      const response = await searchUserInfoApi(props.value.name);
+      const { data: usersInfos } = response;
+      setUserInfos(usersInfos);
+    } catch (e) {
+      if (e.response.status === 400) {
+        alert("bad requeset");
       }
-    },
-    [ setUserInfos],
-  );
+    }
+  }, [setUserInfos]);
 
   const handleOpen = () => {
     setOpen(true);

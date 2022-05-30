@@ -8,12 +8,12 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Button from "@mui/material/Button";
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Avatar from "@mui/material/Avatar";
+import Typography from "@mui/material/Typography";
 
 const style = {
   position: "absolute",
@@ -37,11 +37,14 @@ const PostComment = (props) => {
     setNewComment(e.target.value);
   };
 
-  const PostComment = async() => {
-    const response = await BoardCommentPostApi(props.boardInfo.boardId, newComment);
+  const PostComment = async () => {
+    const response = await BoardCommentPostApi(
+      props.boardInfo.boardId,
+      newComment,
+    );
     console.log(response);
     setNewComment("");
-    setComments([...comments,response.data]);
+    setComments([...comments, response.data]);
   };
 
   const getComment = useCallback(
@@ -79,26 +82,26 @@ const PostComment = (props) => {
         <Box sx={{ ...style, width: 700, flexGrow: 1 }}>
           <List
             sx={{
-              width: '100%',
+              width: "100%",
               maxWidth: 360,
-              bgcolor: 'background.paper',
-              position: 'relative',
-              overflow: 'auto',
+              bgcolor: "background.paper",
+              position: "relative",
+              overflow: "auto",
               maxHeight: 300,
-              '& ul': { padding: 0 },
+              "& ul": { padding: 0 },
             }}
           >
             {comments.map((c) => (
               <ListItem key={c.commentId} alignItems="flex-start">
                 <ListItemAvatar>
-                  <Avatar alt = {c.userId} src = {c.profileImage} />
+                  <Avatar alt={c.userId} src={c.profileImage} />
                 </ListItemAvatar>
                 <ListItemText
-                  primary = {c.userId}
+                  primary={c.userId}
                   secondary={
                     <Fragment>
                       <Typography
-                        sx={{ display: 'inline' }}
+                        sx={{ display: "inline" }}
                         component="span"
                         variant="body2"
                         color="text.primary"
