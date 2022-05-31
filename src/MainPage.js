@@ -19,6 +19,37 @@ import {
 } from "@mui/material";
 import { Container } from "@mui/system";
 
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginRight: 12,
+  width: "100%",
+  [theme.breakpoints.up("xs")]: {
+    marginLeft: theme.spacing(1),
+    width: "auto",
+  },
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(0.75),
+    paddingLeft: `calc(1em + ${theme.spacing(1)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
+      },
+    },
+  },
+}));
+
 const MainPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -49,37 +80,6 @@ const MainPage = () => {
     }
   };
 
-  const Search = styled("div")(({ theme }) => ({
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginRight: 12,
-    width: "100%",
-    [theme.breakpoints.up("xs")]: {
-      marginLeft: theme.spacing(1),
-      width: "auto",
-    },
-  }));
-
-  const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: "inherit",
-    "& .MuiInputBase-input": {
-      padding: theme.spacing(0.75),
-      paddingLeft: `calc(1em + ${theme.spacing(1)})`,
-      transition: theme.transitions.create("width"),
-      width: "100%",
-      [theme.breakpoints.up("sm")]: {
-        width: "12ch",
-        "&:focus": {
-          width: "20ch",
-        },
-      },
-    },
-  }));
-
   return (
     <CenterWrapper>
       <AppBar color="primary" position="static">
@@ -107,7 +107,6 @@ const MainPage = () => {
             <StyledInputBase
               placeholder="유저 검색"
               inputProps={{ "aria-label": "search" }}
-              value={searchValue}
               onChange={onChangeField}
             />
           </Search>
@@ -117,7 +116,7 @@ const MainPage = () => {
           </Button>
         </Toolbar>
       </AppBar>
-      <Container maxWidth="xl" sx={{ paddingTop: 2 }}>
+      <Container maxWidth="lg" sx={{ paddingTop: 2 }}>
         <Grid
           container
           spacing={2}
