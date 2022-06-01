@@ -2,10 +2,11 @@ import { HeaderLogo, CenterWrapper, CommentBtn } from "./MainPageElements";
 import { useNavigate } from "react-router-dom";
 import { UserImage } from "./UserSectionElements";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import { eraseUserInfo, eraseTokenInfo } from "./redux/auth-reducer";
 import { removeTokenInfo, removeUserInfo } from "./util/storage";
 import FollowerModal from "./FollowerModal";
+import StudyModal from "./StudyModal";
 import Board from "./Board";
 import {
   alpha,
@@ -21,6 +22,8 @@ import {
   IconButton,
   Avatar,
   MenuItem,
+  Box,
+  ListItemText,
 } from "@mui/material";
 import { Container } from "@mui/system";
 
@@ -65,7 +68,8 @@ const MainPage = () => {
   }, [user]);
 
   const [searchValue, setSearchValue] = useState();
-  const [modalOpen, setModalOpen] = useState(false);
+  const [follerModalOpen, setFolloerModalOpen] = useState(false);
+  const [studyModalOpen, setStudyModalOpen] = useState(false);
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
   const menuOpen = Boolean(menuAnchorEl);
 
@@ -73,8 +77,10 @@ const MainPage = () => {
     setSearchValue(e.target.value);
   };
 
-  const openModal = () => setModalOpen(true);
-  const closeModal = () => setModalOpen(false);
+  const openFolloerModal = () => setFolloerModalOpen(true);
+  const closeFolloerModal = () => setFolloerModalOpen(false);
+  const openStudyModal = () => setStudyModalOpen(true);
+  const closeStudyModal = () => setStudyModalOpen(false);
   const openMenu = (e) => setMenuAnchorEl(e.currentTarget);
   const closeMenu = () => setMenuAnchorEl(null);
 
@@ -122,11 +128,18 @@ const MainPage = () => {
               onChange={onChangeField}
             />
           </Search>
-          <Button variant="contained" color="secondary" onClick={openModal}>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={openFolloerModal}
+          >
             검색
           </Button>
-          {modalOpen && (
-            <FollowerModal search={searchValue} handleClose={closeModal} />
+          {follerModalOpen && (
+            <FollowerModal
+              search={searchValue}
+              handleClose={closeFolloerModal}
+            />
           )}
           <IconButton onClick={openMenu}>
             <Avatar src={user.profileImage}></Avatar>
@@ -153,9 +166,49 @@ const MainPage = () => {
               <Board />
             </Paper>
           </Grid>
+
           <Grid item xs>
             <Paper elevation={2}>
-              {isUserLoggedIn && <UserImage image={user.profileImage} />}
+              <Box
+                sx={{
+                  mx: "auto",
+                  p: 1,
+                  m: 1,
+                  padding: "20px",
+                  display: "flex",
+                  flexWrap: "nowrap",
+                }}
+              >
+                {isUserLoggedIn && <UserImage image={user.profileImage} />}
+                <Box sx={{ mx: "auto", p: 1, m: 1 }}>
+                  <ListItemText
+                    primary={user.nickname}
+                    secondary={
+                      <Fragment>
+                        <Typography
+                          sx={{ display: "inline" }}
+                          component="span"
+                          variant="body2"
+                          color="text.primary"
+                        >
+                          {user.email}
+                        </Typography>
+                      </Fragment>
+                    }
+                  />
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    size="large"
+                    onClick={openStudyModal}
+                  >
+                    start studing
+                  </Button>
+                  {studyModalOpen && (
+                    <StudyModal handleClose={closeStudyModal} />
+                  )}
+                </Box>
+              </Box>
             </Paper>
           </Grid>
         </Grid>
