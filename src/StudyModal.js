@@ -48,7 +48,7 @@ const StudyModal = (props) => {
   };
 
   return (
-    <Dialog open={true} onClose={handleClose} fullWidth maxWidth={"xl"}>
+    <Dialog open={true} onClose={handleClose} fullWidth maxWidth={"md"}>
       <DialogTitle>학습 기록하기</DialogTitle>
       <DialogContent>
         <Card>
