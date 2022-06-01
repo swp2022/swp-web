@@ -1,68 +1,88 @@
-import { React, useCallback, useEffect, useRef } from "react";
-import { Modal, Box, Button } from "@mui/material";
-import { useState } from "react";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "1px solid #000",
-  borderRadius: "4px",
-  boxShadow: 24,
-  p: 4,
-};
-
-const CONSTRAINTS = { audio: false, video: true };
+import { React, useRef, useState } from "react";
+import {
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Card,
+  LinearProgress,
+} from "@mui/material";
+import { closeConnection, startConnection } from "./webRTC/rtc";
+import { useSelector } from "react-redux";
 
 const StudyModal = (props) => {
-  const [pc, setPc] = useState();
-  const [socket, setSocket] = useState();
-
   const videoRef = useRef(null);
+  const user = useSelector((state) => state.user);
+  const token = useSelector((state) => state.token);
+  const [isConnecting, setConnecting] = useState(false);
 
-  const startVideo = async () => {
-    const stream = await navigator.mediaDevices.getUserMedia(CONSTRAINTS);
-    if (videoRef && videoRef.current && !videoRef.current.srcObject) {
-      videoRef.current.srcObject = stream;
-    }
+  var [peerConnection, setPC] = useState(null),
+    [dataChannel, setDC] = useState(null),
+    [mediaStream, setStream] = useState(null);
+  const startStudy = async () => {
+    if (isConnecting) return false;
+    setConnecting(true);
+    const result = await startConnection(
+      videoRef,
+      token.accessToken,
+      user.userId,
+      setConnecting,
+    );
+    setPC(result[0]);
+    setDC(result[1]);
+    setStream(result[2]);
+  };
+
+  const stopStudy = async () => {
+    if (isConnecting) return false;
+    closeConnection(peerConnection, dataChannel, mediaStream);
+    setPC(null);
+    setDC(null);
+    setStream(null);
+    return true;
+  };
+
+  const handleClose = async () => {
+    if (await stopStudy()) props.handleClose();
   };
 
   return (
-    <>
-      <Modal
-        open={true}
-        onClose={props.handleClose}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
-      >
-        <Box sx={{ ...style, width: 400, flexGrow: 1 }}>
+    <Dialog open={true} onClose={handleClose} fullWidth maxWidth={"xl"}>
+      <DialogTitle>학습 기록하기</DialogTitle>
+      <DialogContent>
+        <Card>
+          {isConnecting && <LinearProgress />}
           <video
             style={{
-              width: 240,
-              height: 240,
-              margin: 5,
               backgroundColor: "black",
+              display: "block",
+              width: "100%",
             }}
-            autoplay
+            autoPlay={true}
             ref={videoRef}
           ></video>
-          <Button
-            variant="contained"
-            color="secondary"
-            size="large"
-            onClick={startVideo}
-          >
-            start studing
-          </Button>
-          <Button variant="contained" color="secondary" size="large">
-            stop studing
-          </Button>
-        </Box>
-      </Modal>
-    </>
+        </Card>
+      </DialogContent>
+      <DialogActions>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={startStudy}
+          disabled={isConnecting}
+        >
+          학습 시작
+        </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleClose}
+          disabled={isConnecting}
+        >
+          학습 종료
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 
