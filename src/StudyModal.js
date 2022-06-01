@@ -31,36 +31,36 @@ const StudyModal = (props) => {
   };
 
   return (
-      <Modal
-        open={true}
-        onClose={props.handleClose}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
-      >
-        <Box sx={{ ...style, width: 400, flexGrow: 1 }}>
-          <video
-            style={{
-              width: 240,
-              height: 240,
-              margin: 5,
-              backgroundColor: "black",
-            }}
-            autoPlay
-            ref={videoRef}
-          ></video>
-          <Button
-            variant="contained"
-            color="secondary"
-            size="large"
-            onClick={startVideo}
-          >
-            start studing
-          </Button>
-          <Button variant="contained" color="secondary" size="large">
-            stop studing
-          </Button>
-        </Box>
-      </Modal>
+    <Modal
+      open={true}
+      onClose={props.handleClose}
+      aria-labelledby="parent-modal-title"
+      aria-describedby="parent-modal-description"
+    >
+      <Box sx={{ ...style, width: 400, flexGrow: 1 }}>
+        <video
+          style={{
+            width: 240,
+            height: 240,
+            margin: 5,
+            backgroundColor: "black",
+          }}
+          autoPlay
+          ref={videoRef}
+        ></video>
+        <Button
+          variant="contained"
+          color="secondary"
+          size="large"
+          onClick={startVideo}
+        >
+          start studing
+        </Button>
+        <Button variant="contained" color="secondary" size="large">
+          stop studing
+        </Button>
+      </Box>
+    </Modal>
   );
 };
 
