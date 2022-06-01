@@ -31,7 +31,6 @@ const StudyModal = (props) => {
   };
 
   return (
-    <>
       <Modal
         open={true}
         onClose={props.handleClose}
@@ -46,7 +45,7 @@ const StudyModal = (props) => {
               margin: 5,
               backgroundColor: "black",
             }}
-            autoplay
+            autoPlay
             ref={videoRef}
           ></video>
           <Button
@@ -62,7 +61,6 @@ const StudyModal = (props) => {
           </Button>
         </Box>
       </Modal>
-    </>
   );
 };
 

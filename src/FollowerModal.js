@@ -45,7 +45,6 @@ const FollowerModal = (props) => {
   }, []);
 
   return (
-    <>
       <Modal
         open={true}
         onClose={props.handleClose}
@@ -63,7 +62,6 @@ const FollowerModal = (props) => {
           ))}
         </Box>
       </Modal>
-    </>
   );
 };
 
