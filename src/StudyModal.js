@@ -51,13 +51,14 @@ const StudyModal = (props) => {
     <Dialog open={true} onClose={handleClose} fullWidth maxWidth={"md"}>
       <DialogTitle>학습 기록하기</DialogTitle>
       <DialogContent>
-        <Card>
+        <Card style={{ margin: "0 auto", maxWidth: "80%" }}>
           {isConnecting && <LinearProgress />}
           <video
             style={{
               backgroundColor: "black",
               display: "block",
               width: "100%",
+              objectFit: "contain",
             }}
             autoPlay={true}
             ref={videoRef}
