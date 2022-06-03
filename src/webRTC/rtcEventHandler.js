@@ -1,5 +1,12 @@
 const LOG = (str) => console.log("rtcEventHandler.js: " + str);
 
+export const onIceCandidate = (e, pc) => {
+  if (e.candidate) {
+    ++pc.iceCount;
+    LOG("ICE candidate count:" + pc.iceCount);
+  }
+};
+
 export const onIceGatheringStateChange = (pc) => {
   LOG("icegathering -> " + pc.iceGatheringState);
 };

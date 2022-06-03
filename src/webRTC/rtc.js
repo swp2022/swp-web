@@ -2,6 +2,7 @@ import {
   onDataChannelClose,
   onDataChannelMessage,
   onDataChannelOpen,
+  onIceCandidate,
   onIceConnectionStateChange,
   onIceGatheringStateChange,
   onSignalingStateChange,
@@ -54,12 +55,10 @@ export const createPeerConnection = (videoRef, handleConnecting) => {
     false,
   );
 
-  peerConnection.onicecandidate = (e) => {
-    if (e.candidate) {
-      ++peerConnection.iceCount;
-      LOG("ICE candidate count:" + peerConnection.iceCount + ")");
-    }
-  };
+  // ICE Gathering 핸들러
+  peerConnection.addEventListener("icecandidate", (e) =>
+    onIceCandidate(e, peerConnection),
+  );
 
   // Video Track 받는 Handler
   peerConnection.addEventListener("track", (e) =>
