@@ -17,29 +17,20 @@ const StudyModal = (props) => {
   const token = useSelector((state) => state.token);
   const [isConnecting, setConnecting] = useState(false);
 
-  var [peerConnection, setPC] = useState(null),
-    [dataChannel, setDC] = useState(null),
-    [mediaStream, setStream] = useState(null);
   const startStudy = async () => {
     if (isConnecting) return false;
     setConnecting(true);
-    const result = await startConnection(
+    await startConnection(
       videoRef,
       token.accessToken,
       user.userId,
       setConnecting,
     );
-    setPC(result[0]);
-    setDC(result[1]);
-    setStream(result[2]);
   };
 
   const stopStudy = async () => {
     if (isConnecting) return false;
-    closeConnection(peerConnection, dataChannel, mediaStream);
-    setPC(null);
-    setDC(null);
-    setStream(null);
+    closeConnection();
     return true;
   };
 

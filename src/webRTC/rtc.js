@@ -2,14 +2,19 @@ import {
   onDataChannelClose,
   onDataChannelMessage,
   onDataChannelOpen,
+  onIceCandidate,
   onIceConnectionStateChange,
   onIceGatheringStateChange,
   onSignalingStateChange,
   trackHandler,
 } from "./rtcEventHandler";
 
+// ICE Gathering 을 끝까지 기다리지 않고 연결 수립하는 기준
+const iceGatheringThreshold = 10;
+
 const debugging = false;
 const local = false;
+
 const offerUrl = local
   ? "http://localhost:8080/offer"
   : "http://54.180.224.121:5000/offer";
@@ -17,67 +22,89 @@ const LOG = (str) => {
   if (debugging) console.log("rtc.js: " + str);
 };
 
-export const createPeerConnection = (videoRef, handleConnecting) => {
+var peerConnection = null,
+  dataChannel = null,
+  mediaStream = null;
+
+export const createPeerConnection = (videoRef, setConnecting) => {
   const config = {
     sdpSemantics: "unified-plan",
-    iceServers: [{ urls: ["stun:stun4.l.google.com:19302"] }],
+    iceServers: [
+      {
+        urls: ["stun:stun.l.google.com:19302", "stun:stun4.l.google.com:19302"],
+      },
+    ],
   };
-  const pc = new RTCPeerConnection(config);
+  const peerConnection = new RTCPeerConnection(config);
+  peerConnection.iceCount = 0;
 
   // 디버깅 용도 핸들러
-  pc.addEventListener(
+  peerConnection.addEventListener(
     "icegatheringstatechange",
-    () => onIceGatheringStateChange(pc),
+    () => onIceGatheringStateChange(peerConnection),
     false,
   );
-  pc.addEventListener(
+  peerConnection.addEventListener(
     "iceconnectionstatechange",
-    () => onIceConnectionStateChange(pc),
+    () => onIceConnectionStateChange(peerConnection),
     false,
   );
-  pc.addEventListener(
+  peerConnection.addEventListener(
     "signalingstatechange",
-    () => onSignalingStateChange(pc),
+    () => onSignalingStateChange(peerConnection),
     false,
+  );
+
+  // ICE Gathering 핸들러
+  peerConnection.addEventListener("icecandidate", (e) =>
+    onIceCandidate(e, peerConnection),
   );
 
   // Video Track 받는 Handler
-  pc.addEventListener("track", (e) =>
-    trackHandler(e, videoRef, handleConnecting),
+  peerConnection.addEventListener("track", (e) =>
+    trackHandler(e, videoRef, setConnecting),
   );
 
-  return pc;
+  return peerConnection;
 };
 
-export async function negotiate(peerConnection, accessToken, userId) {
+function waitIceGathering(peerConnection) {
+  // ICE Gathering을 끝까지 기다리지 않고 연결을 수립합니다
+  return new Promise(function (resolve) {
+    if (peerConnection.iceCount >= iceGatheringThreshold) {
+      resolve();
+    } else {
+      function checkState() {
+        LOG(
+          "waitIceGathering: " +
+            peerConnection.iceCount +
+            " of " +
+            iceGatheringThreshold,
+        );
+        if (peerConnection.iceCount >= iceGatheringThreshold) {
+          peerConnection.removeEventListener("icecandidate", checkState);
+          resolve();
+        }
+      }
+      peerConnection.addEventListener("icecandidate", checkState);
+    }
+  });
+}
+
+export async function negotiate(
+  peerConnection,
+  accessToken,
+  userId,
+  setConnecting,
+) {
   await peerConnection
     .createOffer()
-    .then((offer) => peerConnection.setLocalDescription(offer))
-    .then(
-      () =>
-        new Promise(function (resolve) {
-          if (peerConnection.iceGatheringState === "complete") {
-            resolve();
-          } else {
-            function checkState() {
-              if (peerConnection.iceGatheringState === "complete") {
-                peerConnection.removeEventListener(
-                  "icegatheringstatechange",
-                  checkState,
-                );
-                resolve();
-              }
-            }
-            peerConnection.addEventListener(
-              "icegatheringstatechange",
-              checkState,
-            );
-          }
-        }),
-    );
+    .then((offer) => peerConnection.setLocalDescription(offer));
+
+  await waitIceGathering(peerConnection);
 
   const offer = peerConnection.localDescription;
-  LOG("Offer SDP: " + offer.sdp);
+  LOG("Sending Offer");
   try {
     const response = await fetch(offerUrl, {
       body: JSON.stringify({
@@ -98,6 +125,8 @@ export async function negotiate(peerConnection, accessToken, userId) {
     peerConnection.setRemoteDescription(answer);
   } catch (e) {
     LOG("negotiate error:" + e);
+    setConnecting(false);
+    closeConnection();
   }
 }
 
@@ -105,33 +134,33 @@ export async function startConnection(
   videoRef,
   accessToken,
   userId,
-  handleConnecting,
+  setConnecting,
 ) {
   const parameters = { ordered: true };
   const constraints = { audio: false, video: true };
 
-  const peerConnection = createPeerConnection(videoRef, handleConnecting);
+  closeConnection();
 
-  const dataChannel = peerConnection.createDataChannel("chat", parameters);
-  let stream = null;
+  peerConnection = createPeerConnection(videoRef, setConnecting);
+  dataChannel = peerConnection.createDataChannel("chat", parameters);
 
   dataChannel.onclose = () => onDataChannelClose();
   dataChannel.onopen = () => onDataChannelOpen();
   dataChannel.onmessage = (e) => onDataChannelMessage(e);
 
   try {
-    stream = await navigator.mediaDevices.getUserMedia(constraints);
-    stream
+    mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
+    mediaStream
       .getTracks()
-      .forEach((track) => peerConnection.addTrack(track, stream));
-    negotiate(peerConnection, accessToken, userId);
+      .forEach((track) => peerConnection.addTrack(track, mediaStream));
+    negotiate(peerConnection, accessToken, userId, setConnecting);
   } catch (err) {
     LOG("Could not acquire media: " + err);
+    closeConnection();
   }
-  return [peerConnection, dataChannel, stream];
 }
 
-export function closeConnection(peerConnection, dataChannel, mediaStream) {
+export function closeConnection() {
   if (dataChannel) {
     dataChannel.close();
   }
@@ -156,4 +185,8 @@ export function closeConnection(peerConnection, dataChannel, mediaStream) {
 
   // Peer Connection 종료
   peerConnection.close();
+
+  peerConnection = null;
+  dataChannel = null;
+  mediaStream = null;
 }
