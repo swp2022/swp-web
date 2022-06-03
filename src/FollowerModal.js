@@ -45,25 +45,23 @@ const FollowerModal = (props) => {
   }, []);
 
   return (
-    <>
-      <Modal
-        open={true}
-        onClose={props.handleClose}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
-      >
-        <Box sx={{ ...style, width: 400, flexGrow: 1 }}>
-          {userInfos.map((userInfo, index) => (
-            <UserInfoComponent
-              key={userInfo.userId}
-              index={index}
-              userInfo={userInfo}
-              updateFollowing={updateFollowing}
-            />
-          ))}
-        </Box>
-      </Modal>
-    </>
+    <Modal
+      open={true}
+      onClose={props.handleClose}
+      aria-labelledby="parent-modal-title"
+      aria-describedby="parent-modal-description"
+    >
+      <Box sx={{ ...style, width: 400, flexGrow: 1 }}>
+        {userInfos.map((userInfo, index) => (
+          <UserInfoComponent
+            key={userInfo.userId}
+            index={index}
+            userInfo={userInfo}
+            updateFollowing={updateFollowing}
+          />
+        ))}
+      </Box>
+    </Modal>
   );
 };
 

@@ -1,13 +1,14 @@
-import { HeaderLogo, CenterWrapper, CommentBtn } from "./MainPageElements";
+import { HeaderLogo, CenterWrapper } from "../MainPageElements";
 import { useNavigate } from "react-router-dom";
-import { UserImage } from "./UserSectionElements";
+import { UserImage } from "../UserSectionElements";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, Fragment } from "react";
-import { eraseUserInfo, eraseTokenInfo } from "./redux/auth-reducer";
-import { removeTokenInfo, removeUserInfo } from "./util/storage";
-import FollowerModal from "./FollowerModal";
-import StudyModal from "./StudyModal";
-import Board from "./Board";
+import { eraseUserInfo, eraseTokenInfo } from "../redux/auth-reducer";
+import { removeTokenInfo, removeUserInfo } from "../util/storage";
+import FollowerModal from "../FollowerModal";
+import StudyModal from "../StudyModal";
+import StudyLog from "./StudyLog";
+import MyBoard from "./MyBoard";
 import {
   alpha,
   AppBar,
@@ -26,6 +27,8 @@ import {
   ListItemText,
 } from "@mui/material";
 import { Container } from "@mui/system";
+import Fab from "@mui/material/Fab";
+import EditIcon from "@mui/icons-material/Edit";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -68,6 +71,7 @@ const MainPage = () => {
   }, [user]);
 
   const [searchValue, setSearchValue] = useState();
+  const [studyLogOpen, setStudyLogOpen] = useState(false);
   const [follerModalOpen, setFolloerModalOpen] = useState(false);
   const [studyModalOpen, setStudyModalOpen] = useState(false);
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
@@ -77,6 +81,8 @@ const MainPage = () => {
     setSearchValue(e.target.value);
   };
 
+  const openStudyLog = () => setStudyLogOpen(true);
+  const closeStudyLog = () => setStudyLogOpen(false);
   const openFolloerModal = () => setFolloerModalOpen(true);
   const closeFolloerModal = () => setFolloerModalOpen(false);
   const openStudyModal = () => setStudyModalOpen(true);
@@ -99,8 +105,8 @@ const MainPage = () => {
     }
   };
 
-  const go2myPage = () => {
-    navigate("/mypage");
+  const go2mainPage = () => {
+    navigate("/mainpage");
   };
 
   return (
@@ -154,11 +160,20 @@ const MainPage = () => {
             onClose={closeMenu}
             onClick={closeMenu}
           >
-            <MenuItem onClick={go2myPage}>마이페이지</MenuItem>
+            <MenuItem onClick={go2mainPage}>메인페이지</MenuItem>
             <MenuItem onClick={checkLogout}>로그아웃</MenuItem>
           </Menu>
         </Toolbar>
       </AppBar>
+      <Fab
+        sx={{ position: "fixed", bottom: 16, right: 16 }}
+        aria-label={"Edit"}
+        color={"primary"}
+        onClick={openStudyLog}
+      >
+        <EditIcon />
+      </Fab>
+      {studyLogOpen && <StudyLog handleClose={closeStudyLog} />}
       <Container maxWidth="lg" sx={{ paddingTop: 2 }}>
         <Grid
           container
@@ -166,7 +181,9 @@ const MainPage = () => {
           direction={{ xs: "column-reverse", md: "row" }}
         >
           <Grid item xs={12} md={8}>
-            <Board />
+            <Paper elevation={2}>
+              <MyBoard />
+            </Paper>
           </Grid>
 
           <Grid item xs>
