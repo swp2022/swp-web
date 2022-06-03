@@ -46,7 +46,7 @@ const StudyModal = (props) => {
   const handleClose = async () => {
     if (await stopStudy()) props.handleClose();
   };
-  return(
+  return (
     <Dialog open={true} onClose={handleClose} fullWidth maxWidth={"md"}>
       <DialogTitle>학습 기록하기</DialogTitle>
       <DialogContent>
