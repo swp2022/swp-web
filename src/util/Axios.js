@@ -91,3 +91,13 @@ export const deleteFollowingApi = async (userId) => {
     },
   });
 };
+
+export const studyLogGetApi = async (studyId) => {
+  return Axios.get(`/v1/study/studylog/${studyId}`, {
+    headers: {
+      Authorization: `Bearer ${
+        JSON.parse(localStorage.getItem("tokenInfo")).accessToken
+      }`,
+    },
+  });
+};

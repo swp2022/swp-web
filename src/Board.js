@@ -5,6 +5,7 @@ import { eraseBoardInfo, setBoardInfo } from "./redux/board-reducer";
 import { useCallback, useEffect, useState } from "react";
 import { followerContentGetApi } from "./util/Axios";
 import { LoadingWrap } from "./BoardElement";
+import { Grid } from "@mui/material";
 
 export default function Board() {
   const boards = useSelector((state) => state.board);
@@ -60,15 +61,17 @@ export default function Board() {
   }, [target]);
 
   return (
-    <>
+    <Grid container spacing={2}>
       {boards.map((boardInfo) => (
-        <Post key={boardInfo.boardId} boardInfo={boardInfo} />
+        <Grid key={boardInfo.boardId} item xs={12}>
+          <Post boardInfo={boardInfo} />
+        </Grid>
       ))}
       {!isLoadCompleted && (
         <LoadingWrap ref={setTarget}>
           {isLoading && <ReactLoading type="spin" color="#d9aa8a" />}
         </LoadingWrap>
       )}
-    </>
+    </Grid>
   );
 }

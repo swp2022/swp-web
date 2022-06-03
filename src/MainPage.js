@@ -149,9 +149,7 @@ const MainPage = () => {
           direction={{ xs: "column-reverse", md: "row" }}
         >
           <Grid item xs={12} md={8}>
-            <Paper elevation={2}>
-              <Board />
-            </Paper>
+            <Board />
           </Grid>
           <Grid item xs>
             <Paper elevation={2}>

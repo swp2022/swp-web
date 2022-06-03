@@ -1,7 +1,6 @@
-import { React, useCallback, Fragment } from "react";
+import { React, useCallback, Fragment, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { Modal } from "@mui/material";
-import { CommentBtn } from "./PostElements";
 import { useState } from "react";
 import { BoardCommentGetApi, BoardCommentPostApi } from "./util/Axios";
 import Grid from "@mui/material/Grid";
@@ -22,14 +21,12 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 700,
   bgcolor: "background.paper",
-  border: "1px solid #000",
   borderRadius: "4px",
   boxShadow: 24,
   p: 4,
 };
 
 const PostComment = (props) => {
-  const [open, setOpen] = useState(false);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
 
@@ -62,90 +59,83 @@ const PostComment = (props) => {
     [setComments],
   );
 
-  const handleOpen = () => {
-    setOpen(true);
+  useEffect(() => {
     getComment(props.boardInfo.boardId);
-  };
-  const handleClose = () => setOpen(false);
+  }, [getComment]);
+
+  const handleClose = () => props.handleCommentExpand(false);
 
   return (
-    <div>
-      <CommentBtn
-        onClick={handleOpen}
-      >{`${props.boardInfo.commentCount}개의 댓글 보기...`}</CommentBtn>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
-      >
-        <Box sx={{ ...style, width: 700, flexGrow: 1 }}>
-          <List
-            sx={{
-              width: "100%",
-              bgcolor: "background.paper",
-              position: "relative",
-              overflow: "auto",
-              maxHeight: 300,
-              "& ul": { padding: 0 },
-            }}
-          >
-            {comments.map((c) => (
-              <ListItem key={c.commentId} alignItems="flex-start">
-                <ListItemAvatar>
-                  <Avatar src={c.profileImage} />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={c.userId}
-                  secondary={
-                    <Fragment>
-                      <Typography
-                        sx={{ display: "inline" }}
-                        component="span"
-                        variant="body2"
-                        color="text.primary"
-                      >
-                        {c.content}
-                      </Typography>
-                    </Fragment>
-                  }
-                />
-              </ListItem>
-            ))}
-          </List>
-          <Grid container columns={16}>
-            <Grid item xs={14}>
-              <Box
-                sx={{
-                  maxWidth: "100%",
-                  display: "flex",
-                  alignItems: "flex-end",
-                }}
-              >
-                <AccountCircle
-                  sx={{ color: "action.active", mr: 1, my: 0.5 }}
-                />
-                <TextField
-                  onChange={onChangeField}
-                  value={newComment}
-                  fullWidth
-                  label="댓글 달기..."
-                  id="input-with-sx"
-                  variant="standard"
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={2}>
-              <Box sx={{ p: 1 }}>
-                <Button variant="text" size="large" onClick={PostComment}>
-                  계시
-                </Button>
-              </Box>
-            </Grid>
+    <Modal
+      open={true}
+      onClose={handleClose}
+      aria-labelledby="parent-modal-title"
+      aria-describedby="parent-modal-description"
+    >
+      <Box sx={{ ...style, width: 700, flexGrow: 1 }}>
+        <List
+          sx={{
+            width: "100%",
+            bgcolor: "background.paper",
+            position: "relative",
+            overflow: "auto",
+            maxHeight: 300,
+            "& ul": { padding: 0 },
+          }}
+        >
+          {comments.map((c) => (
+            <ListItem key={c.commentId} alignItems="flex-start">
+              <ListItemAvatar>
+                <Avatar src={c.profileImage} />
+              </ListItemAvatar>
+              <ListItemText
+                primary={c.userId}
+                secondary={
+                  <Fragment>
+                    <Typography
+                      sx={{ display: "inline" }}
+                      component="span"
+                      variant="body2"
+                      color="text.primary"
+                    >
+                      {c.content}
+                    </Typography>
+                  </Fragment>
+                }
+              />
+            </ListItem>
+          ))}
+        </List>
+        <Grid container columns={16}>
+          <Grid item xs={14}>
+            <Box
+              sx={{
+                maxWidth: "100%",
+                display: "flex",
+                alignItems: "flex-end",
+              }}
+            >
+              <AccountCircle sx={{ color: "action.active", mr: 1, my: 0.5 }} />
+              <TextField
+                onChange={onChangeField}
+                value={newComment}
+                fullWidth
+                label="댓글 달기..."
+                id="input-with-sx"
+                variant="standard"
+              />
+            </Box>
           </Grid>
-        </Box>
-      </Modal>
-    </div>
+          <Grid item xs={2}>
+            <Box sx={{ p: 1 }}>
+              <Button variant="text" size="large" onClick={PostComment}>
+                게시
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
+      </Box>
+    </Modal>
   );
 };
 
