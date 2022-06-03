@@ -26,7 +26,7 @@ var peerConnection = null,
   dataChannel = null,
   mediaStream = null;
 
-export const createPeerConnection = (videoRef, handleConnecting) => {
+export const createPeerConnection = (videoRef, setConnecting) => {
   const config = {
     sdpSemantics: "unified-plan",
     iceServers: [
@@ -62,7 +62,7 @@ export const createPeerConnection = (videoRef, handleConnecting) => {
 
   // Video Track 받는 Handler
   peerConnection.addEventListener("track", (e) =>
-    trackHandler(e, videoRef, handleConnecting),
+    trackHandler(e, videoRef, setConnecting),
   );
 
   return peerConnection;
@@ -95,7 +95,7 @@ export async function negotiate(
   peerConnection,
   accessToken,
   userId,
-  handleConnecting,
+  setConnecting,
 ) {
   await peerConnection
     .createOffer()
@@ -125,7 +125,7 @@ export async function negotiate(
     peerConnection.setRemoteDescription(answer);
   } catch (e) {
     LOG("negotiate error:" + e);
-    handleConnecting(false);
+    setConnecting(false);
     closeConnection();
   }
 }
@@ -134,14 +134,14 @@ export async function startConnection(
   videoRef,
   accessToken,
   userId,
-  handleConnecting,
+  setConnecting,
 ) {
   const parameters = { ordered: true };
   const constraints = { audio: false, video: true };
 
   closeConnection();
 
-  peerConnection = createPeerConnection(videoRef, handleConnecting);
+  peerConnection = createPeerConnection(videoRef, setConnecting);
   dataChannel = peerConnection.createDataChannel("chat", parameters);
 
   dataChannel.onclose = () => onDataChannelClose();
@@ -153,7 +153,7 @@ export async function startConnection(
     mediaStream
       .getTracks()
       .forEach((track) => peerConnection.addTrack(track, mediaStream));
-    negotiate(peerConnection, accessToken, userId, handleConnecting);
+    negotiate(peerConnection, accessToken, userId, setConnecting);
   } catch (err) {
     LOG("Could not acquire media: " + err);
     closeConnection();

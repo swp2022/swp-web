@@ -19,10 +19,10 @@ export const onSignalingStateChange = (pc) => {
   LOG("signaling -> " + pc.signalingState);
 };
 
-export const trackHandler = (e, videoRef, handleConnecting) => {
+export const trackHandler = (e, videoRef, setConnecting) => {
   if (videoRef != null) {
     videoRef.current.srcObject = e.streams[0];
-    handleConnecting(false);
+    setConnecting(false);
   }
 };
 
