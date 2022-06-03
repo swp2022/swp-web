@@ -25,6 +25,16 @@ export const followerContentGetApi = async (page) => {
   });
 };
 
+export const myContentGetApi = async (page) => {
+  return Axios.get(`/v1/board/my?page=${page}`, {
+    headers: {
+      Authorization: `Bearer ${
+        JSON.parse(localStorage.getItem("tokenInfo")).accessToken
+      }`,
+    },
+  });
+};
+
 export const BoardCommentGetApi = async (boardId) => {
   return Axios.get(`/v1/board/${boardId}/comment`, {
     headers: {

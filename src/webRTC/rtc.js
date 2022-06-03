@@ -12,7 +12,7 @@ import {
 // ICE Gathering 을 끝까지 기다리지 않고 연결 수립하는 기준
 const iceGatheringThreshold = 10;
 
-const debugging = false;
+const debugging = true;
 const local = false;
 
 const offerUrl = local

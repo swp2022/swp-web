@@ -1,13 +1,13 @@
-import { HeaderLogo, CenterWrapper, CommentBtn } from "./MainPageElements";
+import { HeaderLogo, CenterWrapper, CommentBtn } from "../MainPageElements";
 import { useNavigate } from "react-router-dom";
-import { UserImage } from "./UserSectionElements";
+import { UserImage } from "../UserSectionElements";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, Fragment } from "react";
-import { eraseUserInfo, eraseTokenInfo } from "./redux/auth-reducer";
-import { removeTokenInfo, removeUserInfo } from "./util/storage";
-import FollowerModal from "./FollowerModal";
-import StudyModal from "./StudyModal";
-import Board from "./Board";
+import { eraseUserInfo, eraseTokenInfo } from "../redux/auth-reducer";
+import { removeTokenInfo, removeUserInfo } from "../util/storage";
+import FollowerModal from "../FollowerModal";
+import StudyModal from "../StudyModal";
+import MyBoard from "./MyBoard";
 import {
   alpha,
   AppBar,
@@ -99,8 +99,8 @@ const MainPage = () => {
     }
   };
 
-  const go2myPage = () => {
-    navigate("/mypage");
+  const go2mainPage = () => {
+    navigate("/mainpage");
   };
 
   return (
@@ -154,7 +154,7 @@ const MainPage = () => {
             onClose={closeMenu}
             onClick={closeMenu}
           >
-            <MenuItem onClick={go2myPage}>마이페이지</MenuItem>
+            <MenuItem onClick={go2mainPage}>메인페이지</MenuItem>
             <MenuItem onClick={checkLogout}>로그아웃</MenuItem>
           </Menu>
         </Toolbar>
@@ -167,7 +167,7 @@ const MainPage = () => {
         >
           <Grid item xs={12} md={8}>
             <Paper elevation={2}>
-              <Board />
+              <MyBoard />
             </Paper>
           </Grid>
 
