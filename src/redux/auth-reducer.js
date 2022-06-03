@@ -6,6 +6,7 @@ const userInitialState = {
   nickname: "",
   profileImage: "",
   role: "",
+  userId: "",
 };
 
 const tokenInitialState = {
@@ -22,12 +23,14 @@ const userSlice = createSlice({
       state.nickname = action.payload.nickname;
       state.profileImage = action.payload.profileImage;
       state.role = action.payload.role;
+      state.userId = action.payload.userId;
     },
     eraseUserInfo(state) {
       state.email = "";
       state.nickname = "";
       state.profileImage = "";
       state.role = "";
+      state.userId = "";
     },
   },
 });
