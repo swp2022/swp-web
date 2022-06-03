@@ -1,4 +1,4 @@
-import { HeaderLogo, CenterWrapper, CommentBtn } from "../MainPageElements";
+import { HeaderLogo, CenterWrapper } from "../MainPageElements";
 import { useNavigate } from "react-router-dom";
 import { UserImage } from "../UserSectionElements";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,6 +7,7 @@ import { eraseUserInfo, eraseTokenInfo } from "../redux/auth-reducer";
 import { removeTokenInfo, removeUserInfo } from "../util/storage";
 import FollowerModal from "../FollowerModal";
 import StudyModal from "../StudyModal";
+import StudyLog from "./StudyLog";
 import MyBoard from "./MyBoard";
 import {
   alpha,
@@ -26,6 +27,8 @@ import {
   ListItemText,
 } from "@mui/material";
 import { Container } from "@mui/system";
+import Fab from "@mui/material/Fab";
+import EditIcon from "@mui/icons-material/Edit";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -68,6 +71,7 @@ const MainPage = () => {
   }, [user]);
 
   const [searchValue, setSearchValue] = useState();
+  const [studyLogOpen, setStudyLogOpen] = useState(false);
   const [follerModalOpen, setFolloerModalOpen] = useState(false);
   const [studyModalOpen, setStudyModalOpen] = useState(false);
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
@@ -77,6 +81,8 @@ const MainPage = () => {
     setSearchValue(e.target.value);
   };
 
+  const openStudyLog = () => setStudyLogOpen(true);
+  const closeStudyLog = () => setStudyLogOpen(false);
   const openFolloerModal = () => setFolloerModalOpen(true);
   const closeFolloerModal = () => setFolloerModalOpen(false);
   const openStudyModal = () => setStudyModalOpen(true);
@@ -159,6 +165,15 @@ const MainPage = () => {
           </Menu>
         </Toolbar>
       </AppBar>
+      <Fab
+        sx={{ position: "fixed", bottom: 16, right: 16 }}
+        aria-label={"Edit"}
+        color={"primary"}
+        onClick={openStudyLog}
+      >
+        <EditIcon />
+      </Fab>
+      {studyLogOpen && <StudyLog handleClose={closeStudyLog} />}
       <Container maxWidth="lg" sx={{ paddingTop: 2 }}>
         <Grid
           container

@@ -24,6 +24,7 @@ export default function Board() {
       try {
         dispatch(eraseBoardInfo());
         const response = await followerContentGetApi(page);
+        console.log(response);
         const { data: boardsInfo } = response;
         setBoardDispatch(boardsInfo);
         return response.data.length;
