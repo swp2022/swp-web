@@ -53,7 +53,7 @@ const StudyModal = (props) => {
             }}
             autoPlay={true}
             ref={videoRef}
-          ></video>
+          />
         </Card>
       </DialogContent>
       <DialogActions>
