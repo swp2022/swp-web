@@ -134,6 +134,14 @@ export async function startConnection(
   const constraints = { audio: false, video: true };
 
   closeConnection();
+  try {
+    mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
+  } catch (err) {
+    logger.log("Could not acquire media: " + err);
+    setConnecting(false);
+    closeConnection();
+    return;
+  }
 
   peerConnection = createPeerConnection(videoRef, setConnecting);
   dataChannel = peerConnection.createDataChannel("chat", parameters);
@@ -142,16 +150,10 @@ export async function startConnection(
   dataChannel.onopen = () => onDataChannelOpen();
   dataChannel.onmessage = (e) => onDataChannelMessage(e);
 
-  try {
-    mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
-    mediaStream
-      .getTracks()
-      .forEach((track) => peerConnection.addTrack(track, mediaStream));
-    negotiate(peerConnection, accessToken, userId, setConnecting);
-  } catch (err) {
-    logger.log("Could not acquire media: " + err);
-    closeConnection();
-  }
+  mediaStream
+    .getTracks()
+    .forEach((track) => peerConnection.addTrack(track, mediaStream));
+  negotiate(peerConnection, accessToken, userId, setConnecting);
 }
 
 export function closeConnection() {
