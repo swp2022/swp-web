@@ -1,12 +1,12 @@
 import Post from "../Post";
 import ReactLoading from "react-loading";
 import { useCallback, useEffect, useState } from "react";
-import { myContentGetApi } from "../util/Axios";
+import { studyGetApi } from "../util/Axios";
 import { LoadingWrap } from "../BoardElement";
 import { Grid } from "@mui/material";
 
 export default function MyBoard() {
-  const [board, setBoard] = useState([]);
+  const [study, setStudy] = useState([]);
   const [target, setTarget] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadCompleted, setIsLoadCompleted] = useState(false);
@@ -15,9 +15,10 @@ export default function MyBoard() {
   const getBoards = useCallback(
     async (page) => {
       try {
-        const response = await myContentGetApi(page);
-        const { data: boardsInfo } = response;
-        setBoard((board) => [...board, ...boardsInfo]);
+        const response = await studyGetApi(page);
+        const { data: studyInfo } = response;
+        setStudy((study) => [...study, ...studyInfo]);
+        console.log(response);
         return response.data.length;
       } catch (e) {
         if (e.response.status === 400) {
@@ -25,7 +26,7 @@ export default function MyBoard() {
         }
       }
     },
-    [setBoard],
+    [setStudy],
   );
 
   const onIntersect = async ([entry], observer) => {
@@ -53,9 +54,9 @@ export default function MyBoard() {
 
   return (
     <Grid container spacing={2}>
-      {board.map((boardInfo) => (
-        <Grid key={boardInfo.boardId} item xs={12}>
-          <Post boardInfo={boardInfo} />
+      {study.map((studyInfo) => (
+        <Grid key={studyInfo.studyId} item xs={12}>
+          {studyInfo.studyid}
         </Grid>
       ))}
       {!isLoadCompleted && (

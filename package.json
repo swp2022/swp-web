@@ -14,6 +14,7 @@
     "axios": "^0.26.1",
     "notistack": "^2.0.5",
     "react": "^18.0.0",
+    "react-chartjs-2": "^4.1.0",
     "react-dom": "^18.0.0",
     "react-intersection-observer": "^9.1.0",
     "react-loading": "^2.0.3",

@@ -161,6 +161,7 @@ const MainPage = () => {
             onClick={closeMenu}
           >
             <MenuItem onClick={go2mainPage}>메인페이지</MenuItem>
+            <MenuItem onClick={go2mainPage}>스터디 기록</MenuItem>
             <MenuItem onClick={checkLogout}>로그아웃</MenuItem>
           </Menu>
         </Toolbar>
@@ -181,9 +182,7 @@ const MainPage = () => {
           direction={{ xs: "column-reverse", md: "row" }}
         >
           <Grid item xs={12} md={8}>
-            <Paper elevation={2}>
-              <MyBoard />
-            </Paper>
+            <MyBoard />
           </Grid>
 
           <Grid item xs>

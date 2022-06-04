@@ -99,3 +99,24 @@ export const deleteFollowingApi = async (userId) => {
     },
   });
 };
+
+export const studyLogGetApi = async (studyId) => {
+  return Axios.get(`/v1/study/studylog/${studyId}`, {
+    headers: {
+      Authorization: `Bearer ${
+        JSON.parse(localStorage.getItem("tokenInfo")).accessToken
+      }`,
+    },
+  });
+};
+
+export const studyGetApi = async (page) => {
+  return Axios.get(`/v1/study?page=${page}`, {
+    headers: {
+      Authorization: `Bearer ${
+        //JSON.parse(localStorage.getItem("tokenInfo")).accessToken
+        "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsInByb3ZpZGVyIjoidGVzdHVzZXIiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjUyODAxNDY4LCJleHAiOjE2NTc4ODc4Njh9.qvR3b6Alms5tAuvB7_Ryr9e3BHKFMVTY-gnnHoEiYw4nQ8EpZtY3UFZhVSlMxlnWZQjNl36peK1g4zJdP-or5g"
+      }`,
+    },
+  });
+};

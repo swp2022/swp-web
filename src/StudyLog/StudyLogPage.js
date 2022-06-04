@@ -1,13 +1,13 @@
-import { HeaderLogo, CenterWrapper, CommentBtn } from "./MainPageElements";
+import { HeaderLogo, CenterWrapper } from "../MainPageElements";
 import { useNavigate } from "react-router-dom";
-import { UserImage } from "./UserSectionElements";
+import { UserImage } from "../UserSectionElements";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, Fragment } from "react";
-import { eraseUserInfo, eraseTokenInfo } from "./redux/auth-reducer";
-import { removeTokenInfo, removeUserInfo } from "./util/storage";
-import FollowerModal from "./FollowerModal";
-import StudyModal from "./StudyModal";
-import Board from "./Board";
+import { eraseUserInfo, eraseTokenInfo } from "../redux/auth-reducer";
+import { removeTokenInfo, removeUserInfo } from "../util/storage";
+import FollowerModal from "../FollowerModal";
+import StudyModal from "../StudyModal";
+import StudyLogBoard from "./StudyLogBoard";
 import {
   alpha,
   AppBar,
@@ -58,7 +58,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const MainPage = () => {
+const StudyLogPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -99,12 +99,12 @@ const MainPage = () => {
     }
   };
 
-  const go2myPage = () => {
-    navigate("/mypage");
+  const go2mainPage = () => {
+    navigate("/mainpage");
   };
 
-  const go2studyLogPage = () => {
-    navigate("/studylog");
+  const go2myPage = () => {
+    navigate("/mypage");
   };
 
   return (
@@ -158,8 +158,8 @@ const MainPage = () => {
             onClose={closeMenu}
             onClick={closeMenu}
           >
+            <MenuItem onClick={go2mainPage}>메인페이지</MenuItem>
             <MenuItem onClick={go2myPage}>마이페이지</MenuItem>
-            <MenuItem onClick={go2studyLogPage}>스터디 기록</MenuItem>
             <MenuItem onClick={checkLogout}>로그아웃</MenuItem>
           </Menu>
         </Toolbar>
@@ -171,7 +171,7 @@ const MainPage = () => {
           direction={{ xs: "column-reverse", md: "row" }}
         >
           <Grid item xs={12} md={8}>
-            <Board />
+            <StudyLogBoard />
           </Grid>
 
           <Grid item xs>
@@ -224,4 +224,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default StudyLogPage;

@@ -4,6 +4,7 @@ import LoginPage from "./LoginPage.js";
 import Auth from "./Auth";
 import MainPage from "./MainPage";
 import MyPage from "./MyPage/MyPage";
+import StudyLogPage from "./StudyLog/StudyLogPage";
 import { HomePrivateRoute, PrivateRoute } from "./routers/PrivateRoute";
 import { ThemeProvider } from "@mui/material/styles";
 import { Theme } from "./util/Theme";
@@ -35,6 +36,14 @@ const App = () => (
           element={
             <PrivateRoute>
               <MyPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/studylog"
+          element={
+            <PrivateRoute>
+              <StudyLogPage />
             </PrivateRoute>
           }
         />
