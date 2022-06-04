@@ -12,9 +12,9 @@ import {
 
 const iceGatheringThreshold = 10;
 
-const local = false;
+const connectToLocalImageServer = false;
 
-const offerUrl = local
+const offerUrl = connectToLocalImageServer
   ? "http://localhost:8080/offer"
   : "https://imagetest.chll.it/offer";
 
