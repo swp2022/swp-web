@@ -25,27 +25,25 @@ const UserInfoComponent = (props) => {
   };
 
   return (
-    <>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1}>
-          <Grid item xs={4}>
-            <Avatar alt="프로필" src={`${props.userInfo.profileImage}`} />
-          </Grid>
-          <Grid item xs={4}></Grid>
-          <Grid item xs={4}>
-            {!followed ? (
-              <Button variant="contained" onClick={postFollowing}>
-                Follow
-              </Button>
-            ) : (
-              <Button variant="outlined" onClick={deleteFollowing}>
-                unFollow
-              </Button>
-            )}
-          </Grid>
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid container spacing={1}>
+        <Grid item xs={4}>
+          <Avatar alt="프로필" src={`${props.userInfo.profileImage}`} />
         </Grid>
-      </Box>
-    </>
+        <Grid item xs={4}></Grid>
+        <Grid item xs={4}>
+          {!followed ? (
+            <Button variant="contained" onClick={postFollowing}>
+              Follow
+            </Button>
+          ) : (
+            <Button variant="outlined" onClick={deleteFollowing}>
+              unFollow
+            </Button>
+          )}
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
 
