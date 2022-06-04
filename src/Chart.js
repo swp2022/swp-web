@@ -99,15 +99,13 @@ const ChartView = (props) => {
   };
 
   return (
-    <div onClick={handleClick}>
-      <div style={chartContainerStyle}>
-        {blur && (
-          <IconButton size="large" color="primary" style={iconStyle}>
-            <Replay fontSize="inherit" />
-          </IconButton>
-        )}
-        <Line style={{ ...blur }} options={options} data={data} />
-      </div>
+    <div onClick={handleClick} style={chartContainerStyle}>
+      {blur && (
+        <IconButton size="large" color="primary" style={iconStyle}>
+          <Replay fontSize="inherit" />
+        </IconButton>
+      )}
+      <Line style={{ ...blur }} options={options} data={data} />
     </div>
   );
 };
