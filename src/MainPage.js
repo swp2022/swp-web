@@ -163,9 +163,9 @@ const MainPage = () => {
         <Grid
           container
           spacing={2}
-          direction={{ xs: "column-reverse", md: "row" }}
+          direction={{ xs: "column-reverse", lg: "row" }}
         >
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} lg={8}>
             <Board />
           </Grid>
 

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,6 +11,8 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { studyLogGetApi } from "./util/Axios";
+import { Replay } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
 
 ChartJS.register(
   CategoryScale,
@@ -23,20 +25,23 @@ ChartJS.register(
 );
 
 const options = {
-  responsive: true,
   plugins: {
     title: {
-      display: true,
+      display: false,
       text: "집중도",
     },
     legend: {
       display: false,
     },
   },
+
   scales: {
     y: {
       min: 0,
       max: 1,
+      ticks: {
+        stepSize: 0.2,
+      },
     },
     x: {
       display: false,
@@ -44,8 +49,27 @@ const options = {
   },
 };
 
+const chartContainerStyle = { position: "relative", width: "99%" };
+
+const iconStyle = {
+  position: "absolute",
+  left: "50%",
+  top: "50%",
+  transform: "translate(-50%, -50%)",
+  zIndex: "1",
+  fontSize: "3rem",
+};
+
 const ChartView = (props) => {
   const [studyLogs, setStudyLogs] = useState([]);
+  const [blur, setBlur] = useState({ filter: "blur(1px)" });
+
+  const handleClick = () => {
+    if (blur) {
+      getStudyLogs(props.studyId);
+      setBlur(null);
+    }
+  };
 
   const getStudyLogs = useCallback(
     async (boardId) => {
@@ -68,17 +92,24 @@ const ChartView = (props) => {
       {
         label: "CPM",
         data: studyLogs.map((log) => log.percentage),
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
+        borderColor: "#8d6e63",
+        backgroundColor: "#8d6e63",
       },
     ],
   };
 
-  useEffect(() => {
-    getStudyLogs(props.studyId);
-  }, [getStudyLogs]);
-
-  return <Line options={options} data={data} />;
+  return (
+    <div onClick={handleClick}>
+      <div style={chartContainerStyle}>
+        {blur && (
+          <IconButton size="large" color="primary" style={iconStyle}>
+            <Replay fontSize="inherit" />
+          </IconButton>
+        )}
+        <Line style={{ ...blur }} options={options} data={data} />
+      </div>
+    </div>
+  );
 };
 
 export default ChartView;
