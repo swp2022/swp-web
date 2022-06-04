@@ -16,7 +16,7 @@ const local = false;
 
 const offerUrl = local
   ? "http://localhost:8080/offer"
-  : "http://54.180.224.121:5000/offer";
+  : "https://imagetest.chll.it/offer";
 
 var peerConnection = null,
   dataChannel = null,
