@@ -1,31 +1,22 @@
 import Post from "./Post";
 import ReactLoading from "react-loading";
-import { useDispatch, useSelector } from "react-redux";
-import { eraseBoardInfo, setBoardInfo } from "./redux/board-reducer";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { followerContentGetApi } from "./util/Axios";
 import { LoadingWrap } from "./BoardElement";
+import { InfiniteScroll } from "./util/InfiniteScroll";
 
 const Board = () => {
-  const boards = useSelector((state) => state.board);
-  const [target, setTarget] = useState(null);
+  const [boards, setBoards] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isPagingDone, setIsPagingDone] = useState(false);
   const [pageNumber, setPageNumber] = useState(0);
-  const dispatch = useDispatch();
-
-  const setBoardDispatch = useCallback(
-    (boardInfo) => dispatch(setBoardInfo(boardInfo)),
-    [dispatch],
-  );
 
   const getBoards = useCallback(
     async (page) => {
       try {
-        dispatch(eraseBoardInfo());
         const response = await followerContentGetApi(page);
         const { data: boardsInfo } = response;
-        setBoardDispatch(boardsInfo);
+        setBoards([...boards, ...boardsInfo]);
         return response.data.length;
       } catch (e) {
         if (e.response.status === 400) {
@@ -33,36 +24,29 @@ const Board = () => {
         }
       }
     },
-    [dispatch, setBoardDispatch],
+    [boards],
   );
 
   const onIntersect = useCallback(
     async ([entry], observer) => {
       if (entry.isIntersecting && !isLoading) {
-        observer.unobserve(entry.target);
         setIsLoading(true);
+        observer.unobserve(entry.target);
 
         const retrivedCount = await getBoards(pageNumber);
         if (!retrivedCount) setIsPagingDone(true);
         setPageNumber((previous) => previous + 1);
 
-        setIsLoading(false);
         observer.observe(entry.target);
+        setIsLoading(false);
       }
     },
-    [pageNumber, getBoards, isLoading],
+    [isLoading, getBoards, pageNumber],
   );
 
-  useEffect(() => {
-    let observer;
-    if (target) {
-      observer = new IntersectionObserver(onIntersect, {
-        threshold: 0.4,
-      });
-      observer.observe(target);
-    }
-    return () => observer && observer.disconnect();
-  }, [target, onIntersect]);
+  const [setTarget] = InfiniteScroll({
+    onIntersect,
+  });
 
   return (
     <>
