@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { followerContentGetApi } from "./util/Axios";
 import { LoadingWrap } from "./BoardElement";
 
-export default function Board() {
+const Board = () => {
   const boards = useSelector((state) => state.board);
   const [target, setTarget] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -73,4 +73,6 @@ export default function Board() {
       )}
     </>
   );
-}
+};
+
+export default Board;
