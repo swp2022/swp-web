@@ -100,11 +100,11 @@ const StudyLogPage = () => {
     }
   };
 
-  const navigate2mainPage = () => {
+  const navigateToMainPage = () => {
     navigate("/mainpage");
   };
 
-  const navigate2myPage = () => {
+  const navigateToMyPage = () => {
     navigate("/mypage");
   };
 
@@ -159,8 +159,8 @@ const StudyLogPage = () => {
             onClose={closeMenu}
             onClick={closeMenu}
           >
-            <MenuItem onClick={navigate2mainPage}>메인페이지</MenuItem>
-            <MenuItem onClick={navigate2myPage}>마이페이지</MenuItem>
+            <MenuItem onClick={navigateToMainPage}>메인페이지</MenuItem>
+            <MenuItem onClick={navigateToMyPage}>마이페이지</MenuItem>
             <MenuItem onClick={checkLogout}>로그아웃</MenuItem>
           </Menu>
         </Toolbar>
