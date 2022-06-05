@@ -31,10 +31,8 @@ const WritingModal = (props) => {
     if (postContent.length === 0) {
       alert("최소 한 글자를 작성하셔야 합니다.");
     } else {
-      if (window.confirm("작성하신 글을 계시 하시겠습니까?")) {
-        postStudyContent(postContent, props.value);
-        props.handleClose();
-      }
+      postStudyContent(postContent, props.value);
+      props.handleClose();
     }
   };
 
