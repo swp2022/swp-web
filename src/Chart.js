@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -85,6 +85,16 @@ const ChartView = (props) => {
     },
     [setStudyLogs],
   );
+
+  const loadImmediate = () => {
+    if (props.loadImmediate) {
+      handleClick();
+    }
+  };
+
+  useEffect(() => {
+    loadImmediate();
+  }, [loadImmediate]);
 
   const data = {
     labels: studyLogs.map((log) => log.recordedTime),
