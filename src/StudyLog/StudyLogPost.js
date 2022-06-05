@@ -4,10 +4,12 @@ import {
   Badge,
   Card,
   CardActions,
+  CardContent,
   CardHeader,
   IconButton,
 } from "@mui/material";
 import WritingModal from "./WritingModal";
+import ChartView from "../Chart";
 
 const StudyLogPost = (props) => {
   const [modalopen, setModalOpen] = useState(false);
@@ -21,6 +23,9 @@ const StudyLogPost = (props) => {
         title={`study : ${props.value.startAt} ~ ${props.value.endAt}`}
         subheader={`집중도 : ${props.value.finalPercentage}%`}
       ></CardHeader>
+      <CardContent>
+        <ChartView studyId={props.value.studyId} />
+      </CardContent>
       <CardActions style={{ justifyContent: "right" }}>
         <IconButton onClick={openModal}>
           <Badge color="primary">
