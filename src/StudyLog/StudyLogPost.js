@@ -4,11 +4,9 @@ import {
   Badge,
   Card,
   CardActions,
-  CardContent,
   CardHeader,
   IconButton,
 } from "@mui/material";
-import Chart from "../Chart";
 import WritingModal from "./WritingModal";
 
 const StudyLogPost = (props) => {
@@ -23,9 +21,6 @@ const StudyLogPost = (props) => {
         title={`study : ${props.value.startAt} ~ ${props.value.endAt}`}
         subheader={`집중도 : ${props.value.finalPercentage}%`}
       ></CardHeader>
-      {/* <CardContent>
-      <Chart studyId={props.value.studyId} />
-    </CardContent> */}
       <CardActions style={{ justifyContent: "right" }}>
         <IconButton onClick={openModal}>
           <Badge color="primary">

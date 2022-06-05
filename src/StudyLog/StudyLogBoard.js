@@ -49,7 +49,7 @@ export default function MyBoard() {
       observer.observe(target);
     }
     return () => observer && observer.disconnect();
-  }, [target]);
+  }, [target, onIntersect]);
 
   return (
     <Grid container spacing={2}>

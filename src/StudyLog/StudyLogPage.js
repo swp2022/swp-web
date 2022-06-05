@@ -69,7 +69,7 @@ const StudyLogPage = () => {
   }, [user]);
 
   const [searchValue, setSearchValue] = useState();
-  const [follerModalOpen, setFolloerModalOpen] = useState(false);
+  const [followerModalOpen, setfollewrModalOpen] = useState(false);
   const [studyModalOpen, setStudyModalOpen] = useState(false);
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
   const menuOpen = Boolean(menuAnchorEl);
@@ -78,8 +78,8 @@ const StudyLogPage = () => {
     setSearchValue(e.target.value);
   };
 
-  const openFolloerModal = () => setFolloerModalOpen(true);
-  const closeFolloerModal = () => setFolloerModalOpen(false);
+  const openFollowerModal = () => setfollewrModalOpen(true);
+  const closeFollowerModal = () => setfollewrModalOpen(false);
   const openStudyModal = () => setStudyModalOpen(true);
   const closeStudyModal = () => setStudyModalOpen(false);
   const openMenu = (e) => setMenuAnchorEl(e.currentTarget);
@@ -100,11 +100,11 @@ const StudyLogPage = () => {
     }
   };
 
-  const go2mainPage = () => {
+  const navigate2mainPage = () => {
     navigate("/mainpage");
   };
 
-  const go2myPage = () => {
+  const navigate2myPage = () => {
     navigate("/mypage");
   };
 
@@ -140,14 +140,14 @@ const StudyLogPage = () => {
           <Button
             variant="contained"
             color="secondary"
-            onClick={openFolloerModal}
+            onClick={openFollowerModal}
           >
             검색
           </Button>
-          {follerModalOpen && (
+          {followerModalOpen && (
             <FollowerModal
               search={searchValue}
-              handleClose={closeFolloerModal}
+              handleClose={closeFollowerModal}
             />
           )}
           <IconButton onClick={openMenu}>
@@ -159,8 +159,8 @@ const StudyLogPage = () => {
             onClose={closeMenu}
             onClick={closeMenu}
           >
-            <MenuItem onClick={go2mainPage}>메인페이지</MenuItem>
-            <MenuItem onClick={go2myPage}>마이페이지</MenuItem>
+            <MenuItem onClick={navigate2mainPage}>메인페이지</MenuItem>
+            <MenuItem onClick={navigate2myPage}>마이페이지</MenuItem>
             <MenuItem onClick={checkLogout}>로그아웃</MenuItem>
           </Menu>
         </Toolbar>
