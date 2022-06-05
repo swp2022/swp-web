@@ -72,3 +72,13 @@ export const Section = styled.div`
   border-top-left-radius: 10px;
   border: 1px solid #d3d3d3;
 `;
+
+export const CommentBtn = styled.button`
+  position: absolute;
+  outline: none;
+  border: none;
+  color: #d3d3d3;
+  cursor: pointer;
+  margin: auto;
+  background-color: #8d6e63;
+`;

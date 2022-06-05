@@ -1,4 +1,4 @@
-import { React, useCallback } from "react";
+import { React, useCallback, Fragment } from "react";
 import Box from "@mui/material/Box";
 import { Modal } from "@mui/material";
 import { CommentBtn } from "./PostElements";
@@ -8,6 +8,12 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Button from "@mui/material/Button";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Avatar from "@mui/material/Avatar";
+import Typography from "@mui/material/Typography";
 
 const style = {
   position: "absolute",
@@ -32,8 +38,12 @@ const PostComment = (props) => {
   };
 
   const PostComment = async () => {
-    await BoardCommentPostApi(props.boardInfo.boardId, newComment);
+    const response = await BoardCommentPostApi(
+      props.boardInfo.boardId,
+      newComment,
+    );
     setNewComment("");
+    setComments([...comments, response.data]);
   };
 
   const getComment = useCallback(
@@ -69,9 +79,39 @@ const PostComment = (props) => {
         aria-describedby="parent-modal-description"
       >
         <Box sx={{ ...style, width: 700, flexGrow: 1 }}>
-          {comments.map((c) => (
-            <p>{c.content}</p>
-          ))}
+          <List
+            sx={{
+              width: "100%",
+              bgcolor: "background.paper",
+              position: "relative",
+              overflow: "auto",
+              maxHeight: 300,
+              "& ul": { padding: 0 },
+            }}
+          >
+            {comments.map((c) => (
+              <ListItem key={c.commentId} alignItems="flex-start">
+                <ListItemAvatar>
+                  <Avatar src={c.profileImage} />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={c.userId}
+                  secondary={
+                    <Fragment>
+                      <Typography
+                        sx={{ display: "inline" }}
+                        component="span"
+                        variant="body2"
+                        color="text.primary"
+                      >
+                        {c.content}
+                      </Typography>
+                    </Fragment>
+                  }
+                />
+              </ListItem>
+            ))}
+          </List>
           <Grid container columns={16}>
             <Grid item xs={14}>
               <Box
@@ -86,6 +126,7 @@ const PostComment = (props) => {
                 />
                 <TextField
                   onChange={onChangeField}
+                  value={newComment}
                   fullWidth
                   label="댓글 달기..."
                   id="input-with-sx"
