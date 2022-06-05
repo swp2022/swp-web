@@ -11,7 +11,7 @@ const Board = () => {
   const [target, setTarget] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isPagingDone, setIsPagingDone] = useState(false);
-  let pageNum = 0;
+  const [pageNumber, setPageNumber] = useState(0);
   const dispatch = useDispatch();
 
   const setBoardDispatch = useCallback(
@@ -36,19 +36,22 @@ const Board = () => {
     [dispatch, setBoardDispatch],
   );
 
-  const onIntersect = async ([entry], observer) => {
-    if (entry.isIntersecting && !isLoading) {
-      observer.unobserve(entry.target);
-      setIsLoading(true);
+  const onIntersect = useCallback(
+    async ([entry], observer) => {
+      if (entry.isIntersecting && !isLoading) {
+        observer.unobserve(entry.target);
+        setIsLoading(true);
 
-      const retrivedCount = await getBoards(pageNum);
-      if (!retrivedCount) setIsPagingDone(true);
-      pageNum = pageNum + 1;
+        const retrivedCount = await getBoards(pageNumber);
+        if (!retrivedCount) setIsPagingDone(true);
+        setPageNumber((previous) => previous + 1);
 
-      setIsLoading(false);
-      observer.observe(entry.target);
-    }
-  };
+        setIsLoading(false);
+        observer.observe(entry.target);
+      }
+    },
+    [pageNumber, getBoards, isLoading],
+  );
 
   useEffect(() => {
     let observer;
