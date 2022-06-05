@@ -61,16 +61,12 @@ const WritingModal = (props) => {
           </Button>
         </Toolbar>
       </AppBar>
-      <Container maxWidth="lg" sx={{ paddingTop: 2 }}>
-        <Grid
-          container
-          spacing={4}
-          direction={{ xs: "column-reverse", lg: "row" }}
-        >
-          <Grid item xs={12} lg={8}>
-            <Chart studyId={props.value} />
+      <Container maxWidth="lg">
+        <Grid container spacing={4} padding={4}>
+          <Grid item xs={12}>
+            <Chart studyId={props.value} loadImmediate />
           </Grid>
-          <Grid item xs={12} lg={4}>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               id="filled-multiline-static"
