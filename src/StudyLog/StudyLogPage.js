@@ -8,6 +8,7 @@ import { removeTokenInfo, removeUserInfo } from "../util/storage";
 import FollowerModal from "../FollowerModal";
 import StudyModal from "../StudyModal";
 import StudyLogBoard from "./StudyLogBoard";
+
 import {
   alpha,
   AppBar,

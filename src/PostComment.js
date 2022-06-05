@@ -89,7 +89,7 @@ const PostComment = (props) => {
                 <Avatar src={c.profileImage} />
               </ListItemAvatar>
               <ListItemText
-                primary={c.userId}
+                primary={c.nickname}
                 secondary={
                   <Fragment>
                     <Typography

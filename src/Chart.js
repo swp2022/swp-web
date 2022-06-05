@@ -72,10 +72,9 @@ const ChartView = (props) => {
   };
 
   const getStudyLogs = useCallback(
-    async (boardId) => {
+    async (studyId) => {
       try {
-        const response = await studyLogGetApi(boardId);
-        console.log(response);
+        const response = await studyLogGetApi(studyId);
         const { data: logs } = response;
         setStudyLogs(logs);
       } catch (e) {

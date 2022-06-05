@@ -1,9 +1,9 @@
-import Post from "../Post";
 import ReactLoading from "react-loading";
 import { useCallback, useEffect, useState } from "react";
 import { studyGetApi } from "../util/Axios";
 import { LoadingWrap } from "../BoardElement";
 import { Grid } from "@mui/material";
+import StudyLogPost from "./StudyLogPost";
 
 export default function MyBoard() {
   const [study, setStudy] = useState([]);
@@ -18,7 +18,6 @@ export default function MyBoard() {
         const response = await studyGetApi(page);
         const { data: studyInfo } = response;
         setStudy((study) => [...study, ...studyInfo]);
-        console.log(response);
         return response.data.length;
       } catch (e) {
         if (e.response.status === 400) {
@@ -56,7 +55,7 @@ export default function MyBoard() {
     <Grid container spacing={2}>
       {study.map((studyInfo) => (
         <Grid key={studyInfo.studyId} item xs={12}>
-          {studyInfo.studyid}
+          <StudyLogPost value={studyInfo} />
         </Grid>
       ))}
       {!isLoadCompleted && (

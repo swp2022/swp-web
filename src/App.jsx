@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./LoginPage.js";
 import Auth from "./Auth";
 import MainPage from "./MainPage";
-import MyPage from "./MyPage/MyPage";
+import MyPage from "./mypage/MyPage";
 import StudyLogPage from "./StudyLog/StudyLogPage";
 import { HomePrivateRoute, PrivateRoute } from "./routers/PrivateRoute";
 import { ThemeProvider } from "@mui/material/styles";

@@ -120,3 +120,20 @@ export const studyGetApi = async (page) => {
     },
   });
 };
+
+export const postStudyContent = async (content, studyId) => {
+  return Axios.post(
+    "/v1/board",
+    {
+      content: content,
+      studyId: studyId,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("tokenInfo")).accessToken
+        }`,
+      },
+    },
+  );
+};
