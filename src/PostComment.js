@@ -42,7 +42,6 @@ const PostComment = (props) => {
       props.boardInfo.boardId,
       newComment,
     );
-    console.log(response);
     setNewComment("");
     setComments([...comments, response.data]);
   };

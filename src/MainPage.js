@@ -1,4 +1,4 @@
-import { HeaderLogo, CenterWrapper, CommentBtn } from "./MainPageElements";
+import { HeaderLogo, CenterWrapper } from "./MainPageElements";
 import { useNavigate } from "react-router-dom";
 import { UserImage } from "./UserSectionElements";
 import { useSelector, useDispatch } from "react-redux";
