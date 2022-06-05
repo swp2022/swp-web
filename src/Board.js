@@ -17,7 +17,7 @@ export default function Board() {
 
   const setBoardDispatch = useCallback(
     (boardInfo) => dispatch(setBoardInfo(boardInfo)),
-    [dispatch],
+    [dispatch, setBoardInfo],
   );
 
   const getBoards = useCallback(
@@ -25,7 +25,6 @@ export default function Board() {
       try {
         dispatch(eraseBoardInfo());
         const response = await followerContentGetApi(page);
-        console.log(response);
         const { data: boardsInfo } = response;
         setBoardDispatch(boardsInfo);
         return response.data.length;
@@ -35,20 +34,23 @@ export default function Board() {
         }
       }
     },
-    [dispatch, setBoardDispatch],
+    [dispatch, eraseBoardInfo, followerContentGetApi, setBoardDispatch],
   );
 
-  const onIntersect = async ([entry], observer) => {
-    if (entry.isIntersecting && !isLoading) {
-      observer.unobserve(entry.target);
-      setIsLoading(true);
-      const retrivedCount = await getBoards(pageNum);
-      if (!retrivedCount) setIsLoadCompleted(true);
-      pageNum = pageNum + 1;
-      setIsLoading(false);
-      observer.observe(entry.target);
-    }
-  };
+  const onIntersect = useCallback(
+    async ([entry], observer) => {
+      if (entry.isIntersecting && !isLoading) {
+        observer.unobserve(entry.target);
+        setIsLoading(true);
+        const retrivedCount = await getBoards(pageNum);
+        if (!retrivedCount) setIsLoadCompleted(true);
+        pageNum = pageNum + 1;
+        setIsLoading(false);
+        observer.observe(entry.target);
+      }
+    },
+    [pageNum],
+  );
 
   useEffect(() => {
     let observer;

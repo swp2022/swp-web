@@ -28,17 +28,20 @@ export default function MyBoard() {
     [setBoard],
   );
 
-  const onIntersect = async ([entry], observer) => {
-    if (entry.isIntersecting && !isLoading) {
-      observer.unobserve(entry.target);
-      setIsLoading(true);
-      const retrivedCount = await getBoards(pageNum);
-      if (!retrivedCount) setIsLoadCompleted(true);
-      pageNum = pageNum + 1;
-      setIsLoading(false);
-      observer.observe(entry.target);
-    }
-  };
+  const onIntersect = useCallback(
+    async ([entry], observer) => {
+      if (entry.isIntersecting && !isLoading) {
+        observer.unobserve(entry.target);
+        setIsLoading(true);
+        const retrivedCount = await getBoards(pageNum);
+        if (!retrivedCount) setIsLoadCompleted(true);
+        pageNum = pageNum + 1;
+        setIsLoading(false);
+        observer.observe(entry.target);
+      }
+    },
+    [pageNum],
+  );
 
   useEffect(() => {
     let observer;
