@@ -1,11 +1,11 @@
-import LoginBtn from "./loginBtn";
+import LoginBtn from "../Elements/loginBtn";
 import {
   CenterWrapper,
   LoadingCircle,
   Container,
   CenterLogo,
   CenterLogin,
-} from "./LoginPageElements";
+} from "../Elements/LoginPageElements";
 
 const loginPage = () => (
   <CenterWrapper>

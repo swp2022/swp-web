@@ -1,9 +1,9 @@
 import ReactLoading from "react-loading";
 import { useCallback, useEffect, useState } from "react";
-import { studyGetApi } from "../util/Axios";
-import { LoadingWrap } from "../BoardElement";
+import { studyGetApi } from "../Utils/Axios";
+import { LoadingWrap } from "../Elements/BoardElement";
 import { Grid } from "@mui/material";
-import StudyLogPost from "./StudyLogPost";
+import StudyLogPost from "../Posts/StudyLogPost";
 
 export default function MyBoard() {
   const [study, setStudy] = useState([]);

@@ -8,8 +8,8 @@ import {
   CardHeader,
   IconButton,
 } from "@mui/material";
-import WritingModal from "./WritingModal";
-import ChartView from "../Chart";
+import WritingModal from "../Modals/WritingModal";
+import ChartView from "../Utils/Chart";
 
 const StudyLogPost = (props) => {
   const [modalopen, setModalOpen] = useState(false);

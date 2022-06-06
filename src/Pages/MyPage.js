@@ -1,14 +1,13 @@
-import { HeaderLogo, CenterWrapper } from "../MainPageElements";
+import { HeaderLogo, CenterWrapper } from "../Elements/MainPageElements";
 import { useNavigate } from "react-router-dom";
-import { UserImage } from "../UserSectionElements";
+import { UserImage } from "../Elements/UserSectionElements";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, Fragment } from "react";
-import { eraseUserInfo, eraseTokenInfo } from "../redux/auth-reducer";
-import { removeTokenInfo, removeUserInfo } from "../util/storage";
-import FollowerModal from "../FollowerModal";
-import StudyModal from "../StudyModal";
-import StudyLogBoard from "./StudyLogBoard";
-
+import { eraseUserInfo, eraseTokenInfo } from "../Redux/auth-reducer";
+import { removeTokenInfo, removeUserInfo } from "../Utils/storage";
+import FollowerModal from "../Modals/FollowerModal";
+import StudyModal from "../Modals/StudyModal";
+import MyBoard from "../Boards/MyBoard";
 import {
   alpha,
   AppBar,
@@ -59,7 +58,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const StudyLogPage = () => {
+const MainPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -69,7 +68,7 @@ const StudyLogPage = () => {
   }, [user]);
 
   const [searchValue, setSearchValue] = useState();
-  const [followerModalOpen, setfollewrModalOpen] = useState(false);
+  const [follerModalOpen, setFolloerModalOpen] = useState(false);
   const [studyModalOpen, setStudyModalOpen] = useState(false);
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
   const menuOpen = Boolean(menuAnchorEl);
@@ -78,8 +77,8 @@ const StudyLogPage = () => {
     setSearchValue(e.target.value);
   };
 
-  const openFollowerModal = () => setfollewrModalOpen(true);
-  const closeFollowerModal = () => setfollewrModalOpen(false);
+  const openFolloerModal = () => setFolloerModalOpen(true);
+  const closeFolloerModal = () => setFolloerModalOpen(false);
   const openStudyModal = () => setStudyModalOpen(true);
   const closeStudyModal = () => setStudyModalOpen(false);
   const openMenu = (e) => setMenuAnchorEl(e.currentTarget);
@@ -104,8 +103,8 @@ const StudyLogPage = () => {
     navigate("/mainpage");
   };
 
-  const navigateToMyPage = () => {
-    navigate("/mypage");
+  const navigateToStudyLogPage = () => {
+    navigate("/studylog");
   };
 
   return (
@@ -140,14 +139,14 @@ const StudyLogPage = () => {
           <Button
             variant="contained"
             color="secondary"
-            onClick={openFollowerModal}
+            onClick={openFolloerModal}
           >
             검색
           </Button>
-          {followerModalOpen && (
+          {follerModalOpen && (
             <FollowerModal
               search={searchValue}
-              handleClose={closeFollowerModal}
+              handleClose={closeFolloerModal}
             />
           )}
           <IconButton onClick={openMenu}>
@@ -160,7 +159,7 @@ const StudyLogPage = () => {
             onClick={closeMenu}
           >
             <MenuItem onClick={navigateToMainPage}>메인페이지</MenuItem>
-            <MenuItem onClick={navigateToMyPage}>마이페이지</MenuItem>
+            <MenuItem onClick={navigateToStudyLogPage}>스터디 기록</MenuItem>
             <MenuItem onClick={checkLogout}>로그아웃</MenuItem>
           </Menu>
         </Toolbar>
@@ -172,7 +171,7 @@ const StudyLogPage = () => {
           direction={{ xs: "column-reverse", md: "row" }}
         >
           <Grid item xs={12} md={8}>
-            <StudyLogBoard />
+            <MyBoard />
           </Grid>
 
           <Grid item xs>
@@ -225,4 +224,4 @@ const StudyLogPage = () => {
   );
 };
 
-export default StudyLogPage;
+export default MainPage;

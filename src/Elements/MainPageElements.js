@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Logoimage from "./Image/mainPageLogo.png";
-import Slogan from "./Image/slogan.png";
+import Logoimage from "../Image/mainPageLogo.png";
+import Slogan from "../Image/slogan.png";
 
 export const CenterWrapper = styled.div`
   position: relative;

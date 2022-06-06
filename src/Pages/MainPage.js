@@ -1,13 +1,13 @@
-import { HeaderLogo, CenterWrapper, CommentBtn } from "./MainPageElements";
+import { HeaderLogo, CenterWrapper } from "../Elements/MainPageElements";
 import { useNavigate } from "react-router-dom";
-import { UserImage } from "./UserSectionElements";
+import { UserImage } from "../Elements/UserSectionElements";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, Fragment } from "react";
-import { eraseUserInfo, eraseTokenInfo } from "./redux/auth-reducer";
-import { removeTokenInfo, removeUserInfo } from "./util/storage";
-import FollowerModal from "./FollowerModal";
-import StudyModal from "./StudyModal";
-import Board from "./Board";
+import { eraseUserInfo, eraseTokenInfo } from "../Redux/auth-reducer";
+import { removeTokenInfo, removeUserInfo } from "../Utils/storage";
+import FollowerModal from "../Modals/FollowerModal";
+import StudyModal from "../Modals/StudyModal";
+import Board from "../Boards/Board";
 import {
   alpha,
   AppBar,

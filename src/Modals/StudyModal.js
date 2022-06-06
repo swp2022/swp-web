@@ -8,7 +8,7 @@ import {
   Card,
   LinearProgress,
 } from "@mui/material";
-import { closeConnection, startConnection } from "./webRTC/rtc";
+import { closeConnection, startConnection } from "../WebRTC/rtc";
 import { useSelector } from "react-redux";
 
 const StudyModal = (props) => {
