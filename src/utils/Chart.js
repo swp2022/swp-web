@@ -8,6 +8,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  Filler,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { studyLogGetApi } from "./Axios";
@@ -22,6 +23,7 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
+  Filler,
 );
 
 const options = {
@@ -34,19 +36,19 @@ const options = {
       display: false,
     },
   },
-
   scales: {
     y: {
       min: 0,
-      max: 1,
+      max: 100,
       ticks: {
-        stepSize: 0.2,
+        stepSize: 25,
       },
     },
     x: {
       display: false,
     },
   },
+  tension: 0.3,
 };
 
 const chartContainerStyle = { position: "relative", width: "99%" };
@@ -64,13 +66,6 @@ const ChartView = (props) => {
   const [studyLogs, setStudyLogs] = useState([]);
   const [blur, setBlur] = useState({ filter: "blur(1px)" });
 
-  const handleClick = () => {
-    if (blur) {
-      getStudyLogs(props.studyId);
-      setBlur(null);
-    }
-  };
-
   const getStudyLogs = useCallback(
     async (studyId) => {
       try {
@@ -86,6 +81,13 @@ const ChartView = (props) => {
     [setStudyLogs],
   );
 
+  const handleClick = useCallback(() => {
+    if (blur) {
+      getStudyLogs(props.studyId);
+      setBlur(null);
+    }
+  }, [blur, getStudyLogs, props.studyId]);
+
   const loadImmediate = useCallback(() => {
     if (props.loadImmediate) {
       handleClick();
@@ -100,6 +102,10 @@ const ChartView = (props) => {
     labels: studyLogs.map((log) => log.recordedTime),
     datasets: [
       {
+        fill: {
+          target: "origin",
+          above: "rgba(141, 110, 99, 0.3)",
+        },
         label: "CPM",
         data: studyLogs.map((log) => log.percentage),
         borderColor: "#8d6e63",
