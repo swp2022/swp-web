@@ -38,11 +38,11 @@ const FollowerModal = (props) => {
         alert("bad requeset");
       }
     }
-  }, [setUserInfos]);
+  }, [setUserInfos, props]);
 
   useEffect(() => {
     getUserInfos();
-  }, []);
+  }, [getUserInfos]);
 
   return (
     <Modal
