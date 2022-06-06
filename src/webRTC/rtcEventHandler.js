@@ -1,22 +1,24 @@
-const LOG = (str) => console.log("rtcEventHandler.js: " + str);
+import { Logger } from "../util/Logger";
+
+const logger = new Logger("rtcEventHandler.js");
 
 export const onIceCandidate = (e, pc) => {
   if (e.candidate) {
     ++pc.iceCount;
-    LOG("ICE candidate count:" + pc.iceCount);
+    logger.log("ICE candidate count:" + pc.iceCount);
   }
 };
 
 export const onIceGatheringStateChange = (pc) => {
-  LOG("icegathering -> " + pc.iceGatheringState);
+  logger.log("icegathering -> " + pc.iceGatheringState);
 };
 
 export const onIceConnectionStateChange = (pc) => {
-  LOG("iceConnection -> " + pc.iceConnectionState);
+  logger.log("iceConnection -> " + pc.iceConnectionState);
 };
 
 export const onSignalingStateChange = (pc) => {
-  LOG("signaling -> " + pc.signalingState);
+  logger.log("signaling -> " + pc.signalingState);
 };
 
 export const trackHandler = (e, videoRef, setConnecting) => {
@@ -27,13 +29,13 @@ export const trackHandler = (e, videoRef, setConnecting) => {
 };
 
 export const onDataChannelClose = () => {
-  LOG("datachannel closed");
+  logger.log("datachannel closed");
 };
 
 export const onDataChannelOpen = () => {
-  LOG("datachannel open");
+  logger.log("datachannel open");
 };
 
 export const onDataChannelMessage = (e) => {
-  LOG("onmessage: " + e.data);
+  logger.log("onmessage: " + e.data);
 };
