@@ -8,7 +8,7 @@ const boardSlice = createSlice({
   initialState: storageState("board", boardInitialState),
   reducers: {
     setBoardInfo(state, action) {
-      action.payload.map((board) => {
+      action.payload.forEach((board) => {
         state.push(board);
       });
     },
