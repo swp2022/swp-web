@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { postFollowingApi, deleteFollowingApi } from "./util/Axios";
+import { postFollowingApi, deleteFollowingApi } from "../Utils/Axios";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";

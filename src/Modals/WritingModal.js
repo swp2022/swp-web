@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import { React, forwardRef } from "react";
-import { postStudyContent } from "../util/Axios";
+import { postStudyContent } from "../Utils/Axios";
 import {
   AppBar,
   Button,
@@ -14,7 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import Chart from "../Chart";
+import Chart from "../Utils/Chart";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;

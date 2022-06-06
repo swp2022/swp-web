@@ -1,8 +1,8 @@
-import Post from "../Post";
+import Post from "../Posts/Post";
 import ReactLoading from "react-loading";
 import { useCallback, useEffect, useState } from "react";
-import { myContentGetApi } from "../util/Axios";
-import { LoadingWrap } from "../BoardElement";
+import { myContentGetApi } from "../Utils/Axios";
+import { LoadingWrap } from "../Elements/BoardElement";
 import { Grid } from "@mui/material";
 
 export default function MyBoard() {

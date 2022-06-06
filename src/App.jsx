@@ -1,13 +1,13 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from "./LoginPage.js";
-import Auth from "./Auth";
-import MainPage from "./MainPage";
-import MyPage from "./MyPage/MyPage";
-import StudyLogPage from "./StudyLog/StudyLogPage";
-import { HomePrivateRoute, PrivateRoute } from "./routers/PrivateRoute";
+import LoginPage from "./Pages/LoginPage.js";
+import Auth from "./Utils/Auth";
+import MainPage from "./Pages/MainPage";
+import MyPage from "./Pages/MyPage";
+import StudyLogPage from "./Pages/StudyLogPage";
+import { HomePrivateRoute, PrivateRoute } from "./Routers/PrivateRoute";
 import { ThemeProvider } from "@mui/material/styles";
-import { Theme } from "./util/Theme";
+import { Theme } from "./Utils/Theme";
 
 const App = () => (
   <ThemeProvider theme={Theme}>

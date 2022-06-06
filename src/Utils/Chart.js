@@ -10,7 +10,7 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { studyLogGetApi } from "./util/Axios";
+import { studyLogGetApi } from "./Axios";
 import { Replay } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 

@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { Comment } from "@mui/icons-material";
 import { useState } from "react";
-import Chart from "./Chart";
+import Chart from "../Utils/Chart";
 
 const Post = (props) => {
   const [commentExpanded, setCommentExpanded] = useState(false);
