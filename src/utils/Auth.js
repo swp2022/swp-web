@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { userInfoGetApi } from "./util/Axios";
-import { setTokenInfo, setUserInfo } from "./redux/auth-reducer";
-
+import { userInfoGetApi } from "./Axios";
+import { setTokenInfo, setUserInfo } from "../redux/auth-reducer";
 const Auth = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

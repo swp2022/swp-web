@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { postFollowingApi, deleteFollowingApi } from "./util/Axios";
+import { postFollowingApi, deleteFollowingApi } from "../utils/Axios";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
+import { ListItemText } from "@mui/material";
 
 const UserInfoComponent = (props) => {
   const [followed, setFollowed] = useState(props.userInfo.isFollowing);

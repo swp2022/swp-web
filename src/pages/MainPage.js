@@ -1,13 +1,13 @@
-import { HeaderLogo, CenterWrapper } from "./MainPageElements";
+import { HeaderLogo, CenterWrapper } from "../elements/MainPageElements";
 import { useNavigate } from "react-router-dom";
-import { UserImage } from "./UserSectionElements";
+import { UserImage } from "../elements/UserSectionElements";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, Fragment } from "react";
-import { eraseUserInfo, eraseTokenInfo } from "./redux/auth-reducer";
-import { removeTokenInfo, removeUserInfo } from "./util/storage";
-import FollowerModal from "./FollowerModal";
-import StudyModal from "./StudyModal";
-import Board from "./Board";
+import { eraseUserInfo, eraseTokenInfo } from "../redux/auth-reducer";
+import { removeTokenInfo, removeUserInfo } from "../utils/storage";
+import FollowerModal from "../modals/FollowerModal";
+import StudyModal from "../modals/StudyModal";
+import Board from "../boards/Board";
 import {
   alpha,
   AppBar,
@@ -99,6 +99,14 @@ const MainPage = () => {
     }
   };
 
+  const navigateToMyPage = () => {
+    navigate("/mypage");
+  };
+
+  const navigateToStudyLogPage = () => {
+    navigate("/studylog");
+  };
+
   return (
     <CenterWrapper>
       <AppBar color="primary" position="static">
@@ -150,7 +158,8 @@ const MainPage = () => {
             onClose={closeMenu}
             onClick={closeMenu}
           >
-            <MenuItem>마이페이지</MenuItem>
+            <MenuItem onClick={navigateToMyPage}>마이페이지</MenuItem>
+            <MenuItem onClick={navigateToStudyLogPage}>스터디 기록</MenuItem>
             <MenuItem onClick={checkLogout}>로그아웃</MenuItem>
           </Menu>
         </Toolbar>
@@ -159,12 +168,10 @@ const MainPage = () => {
         <Grid
           container
           spacing={2}
-          direction={{ xs: "column-reverse", md: "row" }}
+          direction={{ xs: "column-reverse", lg: "row" }}
         >
-          <Grid item xs={12} md={8}>
-            <Paper elevation={2}>
-              <Board />
-            </Paper>
+          <Grid item xs={12} lg={8}>
+            <Board />
           </Grid>
 
           <Grid item xs>

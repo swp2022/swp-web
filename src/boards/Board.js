@@ -1,9 +1,10 @@
-import Post from "./Post";
+import Post from "../posts/Post";
 import ReactLoading from "react-loading";
 import { useCallback, useState } from "react";
 import { followerContentGetApi } from "./util/Axios";
 import { LoadingWrap } from "./BoardElement";
 import { InfiniteScroll } from "./util/InfiniteScroll";
+import { Grid } from "@mui/material";
 
 const Board = () => {
   const [boards, setBoards] = useState([]);
@@ -49,16 +50,18 @@ const Board = () => {
   });
 
   return (
-    <>
+    <Grid container spacing={2}>
       {boards.map((boardInfo) => (
-        <Post key={boardInfo.boardId} boardInfo={boardInfo} />
+        <Grid key={boardInfo.boardId} item xs={12}>
+          <Post boardInfo={boardInfo} />
+        </Grid>
       ))}
       {!isPagingDone && (
         <LoadingWrap ref={setTarget}>
           {isLoading && <ReactLoading type="spin" color="#d9aa8a" />}
         </LoadingWrap>
       )}
-    </>
+    </Grid>
   );
 };
 
