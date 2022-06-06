@@ -1,9 +1,9 @@
 import Post from "../posts/Post";
 import ReactLoading from "react-loading";
 import { useCallback, useState } from "react";
-import { followerContentGetApi } from "./util/Axios";
-import { LoadingWrap } from "./BoardElement";
-import { InfiniteScroll } from "./util/InfiniteScroll";
+import { followerContentGetApi } from "../utils/Axios";
+import { LoadingWrap } from "../elements/BoardElement";
+import { InfiniteScroll } from "../utils/InfiniteScroll";
 import { Grid } from "@mui/material";
 
 const Board = () => {
