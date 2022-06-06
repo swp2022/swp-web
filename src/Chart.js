@@ -86,11 +86,11 @@ const ChartView = (props) => {
     [setStudyLogs],
   );
 
-  const loadImmediate = () => {
+  const loadImmediate = useCallback(() => {
     if (props.loadImmediate) {
       handleClick();
     }
-  };
+  }, [handleClick, props]);
 
   useEffect(() => {
     loadImmediate();
