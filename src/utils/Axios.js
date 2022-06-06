@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "https://test.chll.it";
+const baseURL = "https://api.ostudy.cf";
 
 export const Axios = axios.create({
   baseURL,

@@ -16,7 +16,7 @@ const connectToLocalImageServer = false;
 
 const offerUrl = connectToLocalImageServer
   ? "http://localhost:8080/offer"
-  : "https://imagetest.chll.it/offer";
+  : "https://image.ostudy.cf/offer";
 
 var peerConnection = null,
   dataChannel = null,
