@@ -17,6 +17,7 @@ export default function MyBoard() {
       try {
         const response = await studyGetApi(page);
         const { data: studyInfo } = response;
+        if (page === 0 && studyInfo[0]) studyInfo[0].loadImmediate = true;
         setStudy((study) => [...study, ...studyInfo]);
         return response.data.length;
       } catch (e) {

@@ -1,15 +1,22 @@
 import { useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import {
-  Badge,
+  Button,
   Card,
   CardActions,
   CardContent,
-  CardHeader,
-  IconButton,
+  Chip,
+  Step,
+  StepLabel,
+  Stepper,
 } from "@mui/material";
 import WritingModal from "../modals/WritingModal";
 import ChartView from "../utils/Chart";
+import {
+  PercentRounded,
+  PlayCircleFilledRounded,
+  StopCircleRounded,
+} from "@mui/icons-material";
 
 const StudyLogPost = (props) => {
   const [modalopen, setModalOpen] = useState(false);
@@ -18,20 +25,38 @@ const StudyLogPost = (props) => {
 
   return (
     <Card>
-      <CardHeader
-        avatar={null}
-        title={`study : ${props.value.startAt} ~ ${props.value.endAt}`}
-        subheader={`집중도 : ${props.value.finalPercentage}%`}
-      ></CardHeader>
       <CardContent>
-        <ChartView studyId={props.value.studyId} />
+        <ChartView
+          studyId={props.value.studyId}
+          loadImmediate={props.value.loadImmediate}
+        />
+      </CardContent>
+      <CardContent>
+        <Stepper alternativeLabel activeStep={3}>
+          <Step>
+            <StepLabel icon={<PlayCircleFilledRounded color="primary" s />}>
+              <Chip label={props.value.startAt} variant="outlined" />
+            </StepLabel>
+          </Step>
+          <Step>
+            <StepLabel icon={<PercentRounded />}>
+              <Chip
+                label={`집중도: ${props.value.finalPercentage}%`}
+                variant="outlined"
+              />
+            </StepLabel>
+          </Step>
+          <Step>
+            <StepLabel icon={<StopCircleRounded color="primary" />}>
+              <Chip label={props.value.endAt} variant="outlined" />
+            </StepLabel>
+          </Step>
+        </Stepper>
       </CardContent>
       <CardActions style={{ justifyContent: "right" }}>
-        <IconButton onClick={openModal}>
-          <Badge color="primary">
-            <EditIcon />
-          </Badge>
-        </IconButton>
+        <Button endIcon={<EditIcon />} onClick={openModal}>
+          글쓰기
+        </Button>
       </CardActions>
 
       {modalopen && (

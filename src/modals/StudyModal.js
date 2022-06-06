@@ -10,12 +10,18 @@ import {
 } from "@mui/material";
 import { closeConnection, startConnection } from "../webRTC/rtc";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const StudyModal = (props) => {
   const videoRef = useRef(null);
   const user = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const [isConnecting, setConnecting] = useState(false);
+  const navigate = useNavigate();
+
+  const navigateToStudyLogPage = () => {
+    navigate("/studylog");
+  };
 
   const startStudy = async () => {
     if (isConnecting) return false;
@@ -31,6 +37,7 @@ const StudyModal = (props) => {
   const stopStudy = async () => {
     if (isConnecting) return false;
     closeConnection();
+    navigateToStudyLogPage();
     return true;
   };
 
