@@ -2,7 +2,7 @@ import { React, useCallback, Fragment, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { Modal } from "@mui/material";
 import { useState } from "react";
-import { BoardCommentGetApi, BoardCommentPostApi } from "../Utils/Axios";
+import { BoardCommentGetApi, BoardCommentPostApi } from "../utils/Axios";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import AccountCircle from "@mui/icons-material/AccountCircle";

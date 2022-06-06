@@ -1,8 +1,8 @@
 import { React, useCallback, useEffect } from "react";
 import { Modal, Box } from "@mui/material";
 import { useState } from "react";
-import { searchUserInfoApi } from "../Utils/Axios";
-import UserInfoComponent from "../Elements/UserInfoComponent";
+import { searchUserInfoApi } from "../utils/Axios";
+import UserInfoComponent from "../elements/UserInfoComponent";
 
 const style = {
   position: "absolute",

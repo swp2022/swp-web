@@ -1,10 +1,10 @@
-import Post from "../Posts/Post";
+import Post from "../posts/Post";
 import ReactLoading from "react-loading";
 import { useDispatch, useSelector } from "react-redux";
-import { eraseBoardInfo, setBoardInfo } from "../Redux/board-reducer";
+import { eraseBoardInfo, setBoardInfo } from "../redux/board-reducer";
 import { useCallback, useEffect, useState } from "react";
-import { followerContentGetApi } from "../Utils/Axios";
-import { LoadingWrap } from "../Elements/BoardElement";
+import { followerContentGetApi } from "../utils/Axios";
+import { LoadingWrap } from "../elements/BoardElement";
 import { Grid } from "@mui/material";
 
 export default function Board() {

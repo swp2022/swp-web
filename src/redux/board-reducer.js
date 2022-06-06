@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { storageState } from "../Utils/storage";
+import { storageState } from "../utils/storage";
 
 const boardInitialState = [];
 
