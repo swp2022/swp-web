@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from "./pages/LoginPage.js";
+import LoginPage from "./pages/LoginPage";
 import Auth from "./utils/Auth";
 import MainPage from "./pages/MainPage";
 import MyPage from "./pages/MyPage";
