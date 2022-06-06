@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { postFollowingApi, deleteFollowingApi } from "./util/Axios";
+import { postFollowingApi, deleteFollowingApi } from "../utils/Axios";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
+import { ListItemText } from "@mui/material";
 
 const UserInfoComponent = (props) => {
   const [followed, setFollowed] = useState(props.userInfo.isFollowing);
@@ -28,10 +29,12 @@ const UserInfoComponent = (props) => {
     <>
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>
-          <Grid item xs={4}>
+          <Grid item xs={2}>
             <Avatar alt="프로필" src={`${props.userInfo.profileImage}`} />
           </Grid>
-          <Grid item xs={4}></Grid>
+          <Grid item xs={6}>
+            <ListItemText primary={props.userInfo.nickname} />
+          </Grid>
           <Grid item xs={4}>
             {!followed ? (
               <Button variant="contained" onClick={postFollowing}>

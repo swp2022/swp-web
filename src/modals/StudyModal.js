@@ -8,7 +8,7 @@ import {
   Card,
   LinearProgress,
 } from "@mui/material";
-import { closeConnection, startConnection } from "./webRTC/rtc";
+import { closeConnection, startConnection } from "../webRTC/rtc";
 import { useSelector } from "react-redux";
 
 const StudyModal = (props) => {
@@ -37,7 +37,6 @@ const StudyModal = (props) => {
   const handleClose = async () => {
     if (await stopStudy()) props.handleClose();
   };
-
   return (
     <Dialog open={true} onClose={handleClose} fullWidth maxWidth={"md"}>
       <DialogTitle>학습 기록하기</DialogTitle>

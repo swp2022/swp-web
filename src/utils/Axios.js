@@ -25,6 +25,16 @@ export const followerContentGetApi = async (page) => {
   });
 };
 
+export const myContentGetApi = async (page) => {
+  return Axios.get(`/v1/board/my?page=${page}`, {
+    headers: {
+      Authorization: `Bearer ${
+        JSON.parse(localStorage.getItem("tokenInfo")).accessToken
+      }`,
+    },
+  });
+};
+
 export const BoardCommentGetApi = async (boardId) => {
   return Axios.get(`/v1/board/${boardId}/comment`, {
     headers: {
@@ -88,4 +98,41 @@ export const deleteFollowingApi = async (userId) => {
       }`,
     },
   });
+};
+
+export const studyLogGetApi = async (studyId) => {
+  return Axios.get(`/v1/study/studylog/${studyId}`, {
+    headers: {
+      Authorization: `Bearer ${
+        JSON.parse(localStorage.getItem("tokenInfo")).accessToken
+      }`,
+    },
+  });
+};
+
+export const studyGetApi = async (page) => {
+  return Axios.get(`/v1/study?page=${page}`, {
+    headers: {
+      Authorization: `Bearer ${
+        JSON.parse(localStorage.getItem("tokenInfo")).accessToken
+      }`,
+    },
+  });
+};
+
+export const postStudyContent = async (content, studyId) => {
+  return Axios.post(
+    "/v1/board",
+    {
+      content: content,
+      studyId: studyId,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${
+          JSON.parse(localStorage.getItem("tokenInfo")).accessToken
+        }`,
+      },
+    },
+  );
 };

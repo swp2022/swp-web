@@ -1,10 +1,11 @@
-import Post from "./Post";
+import Post from "../posts/Post";
 import ReactLoading from "react-loading";
 import { useDispatch, useSelector } from "react-redux";
-import { eraseBoardInfo, setBoardInfo } from "./redux/board-reducer";
+import { eraseBoardInfo, setBoardInfo } from "../redux/board-reducer";
 import { useCallback, useEffect, useState } from "react";
-import { followerContentGetApi } from "./util/Axios";
-import { LoadingWrap } from "./BoardElement";
+import { followerContentGetApi } from "../utils/Axios";
+import { LoadingWrap } from "../elements/BoardElement";
+import { Grid } from "@mui/material";
 
 export default function Board() {
   const boards = useSelector((state) => state.board);
@@ -16,7 +17,7 @@ export default function Board() {
 
   const setBoardDispatch = useCallback(
     (boardInfo) => dispatch(setBoardInfo(boardInfo)),
-    [dispatch],
+    [dispatch, setBoardInfo],
   );
 
   const getBoards = useCallback(
@@ -33,20 +34,23 @@ export default function Board() {
         }
       }
     },
-    [dispatch, setBoardDispatch],
+    [dispatch, eraseBoardInfo, followerContentGetApi, setBoardDispatch],
   );
 
-  const onIntersect = async ([entry], observer) => {
-    if (entry.isIntersecting && !isLoading) {
-      observer.unobserve(entry.target);
-      setIsLoading(true);
-      const retrivedCount = await getBoards(pageNum);
-      if (!retrivedCount) setIsLoadCompleted(true);
-      pageNum = pageNum + 1;
-      setIsLoading(false);
-      observer.observe(entry.target);
-    }
-  };
+  const onIntersect = useCallback(
+    async ([entry], observer) => {
+      if (entry.isIntersecting && !isLoading) {
+        observer.unobserve(entry.target);
+        setIsLoading(true);
+        const retrivedCount = await getBoards(pageNum);
+        if (!retrivedCount) setIsLoadCompleted(true);
+        pageNum = pageNum + 1;
+        setIsLoading(false);
+        observer.observe(entry.target);
+      }
+    },
+    [pageNum],
+  );
 
   useEffect(() => {
     let observer;
@@ -57,18 +61,20 @@ export default function Board() {
       observer.observe(target);
     }
     return () => observer && observer.disconnect();
-  }, [target]);
+  }, [target, onIntersect]);
 
   return (
-    <>
+    <Grid container spacing={2}>
       {boards.map((boardInfo) => (
-        <Post key={boardInfo.boardId} boardInfo={boardInfo} />
+        <Grid key={boardInfo.boardId} item xs={12}>
+          <Post boardInfo={boardInfo} />
+        </Grid>
       ))}
       {!isLoadCompleted && (
         <LoadingWrap ref={setTarget}>
           {isLoading && <ReactLoading type="spin" color="#d9aa8a" />}
         </LoadingWrap>
       )}
-    </>
+    </Grid>
   );
 }
